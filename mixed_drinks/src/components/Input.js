@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Input = (props) => {
+const Input = props => {
     return (
         <div>
-            <input />
+            <input onChange={props.handleChange} onKeyPress={props.handleEnterPressed} />
         </div>
     )
 }
