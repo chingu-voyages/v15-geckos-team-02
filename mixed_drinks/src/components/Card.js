@@ -8,11 +8,13 @@ const Card = (props) => {
         width: '200px',
         height: '300px',
         float: 'left',
-        margin: '10px'
+        margin: '10px',
+        boxShadow: '1px 2px 2px #eeee',
     }
     return (
         <div style={divStyle}>
-            {props.drinkName}
+            <h3>{props.drinkName}</h3>
+            <p><i>{props.instructions}</i></p>
         </div>
     )
 }

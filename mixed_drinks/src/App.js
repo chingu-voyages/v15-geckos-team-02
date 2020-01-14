@@ -7,14 +7,19 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      search: "",
       isLoaded: false,
       drinks: []
     }
   }
 
   componentDidMount() {
-    fetch("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita")
-    .then(res => res.json())
+    this.fetch("rum")
+  }
+  
+  fetch(search) {
+    fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${search}`)
+    .then(result => result.json())
     .then(
       (result) => {
         this.setState({
@@ -29,10 +34,11 @@ class App extends Component {
     return (
       <div className="App">
         <Input />
-        {!this.state.isLoaded ? "loading" :
-        this.state.drinks.map(item => {
+        {!this.state.isLoaded ? "Loading..." :
+        this.state.drinks.map(drink => {
+          const {strDrink, strInstructions} = drink
           return (
-            <Card drinkName={item.strDrink}/>
+            <Card drinkName={strDrink} instructions={strInstructions}/>
           )
         })
       }
