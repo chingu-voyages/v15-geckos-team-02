@@ -45,14 +45,20 @@ class App extends Component {
   render () {
     return (
       <div className="App">
+        <h1>Mixed Drinks</h1>
         <Input handleChange={this.handleChange} handleEnterPressed={this.handleEnterPressed} />
         <ErrorBoundary>
         {!this.state.isLoaded ? "Loading..." :
         this.state.drinks === null ? <h1>No Drinks Found</h1>: 
         this.state.drinks.map(drink => {
           const {idDrink, strDrink, strInstructions} = drink;
+          const propertyName = Object.getOwnPropertyNames(drink);
+          const strIngredient = propertyName.filter(propertyName => propertyName.startsWith("strIngredient"));
+          const ingredients = strIngredient.map(ingredient => drink[ingredient]);
+          const strMeasure = propertyName.filter(propertyName => propertyName.startsWith("strMeasure"));
+          const measurements = strMeasure.map(measure => drink[measure])
           return (
-            <Card key={idDrink} id={idDrink} drinkName={strDrink} instructions={strInstructions} />
+            <Card key={idDrink} id={idDrink} drinkName={strDrink} instructions={strInstructions} ingredients={ingredients} measurements={measurements}/>
           )
         })
         }
