@@ -3,14 +3,14 @@ import './Card.css';
 
 const Card = props => {
     return (
-        <div className="div" key={props.id}>
+        <div className="card" key={props.id}>
             <h3>{props.drinkName}</h3>
             <p>{props.instructions}</p>
-            <ul className="ul">
+            <ul className="card__list">
                 {props.ingredients.map((ingredient, index) => {
                     return props.measurements[index] === null ? 
-                    <li className="li">{ingredient}</li> : 
-                    <li className="li">{`${ingredient} - ${props.measurements[index]}`}</li>
+                    <li key={index} className="card__list-item">{ingredient}</li> : 
+                    <li key={index} className="card__list-item">{`${ingredient} - ${props.measurements[index]}`}</li>
                 })}
             </ul>
         </div>

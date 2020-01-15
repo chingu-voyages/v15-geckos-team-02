@@ -58,7 +58,7 @@ class App extends Component {
           const strMeasure = propertyName.filter(propertyName => propertyName.startsWith("strMeasure"));
           const measurements = strMeasure.map(measure => drink[measure])
           return (
-            <Card key={idDrink} id={idDrink} drinkName={strDrink} instructions={strInstructions} ingredients={ingredients} measurements={measurements}/>
+            <Card key={idDrink} id={idDrink} drinkName={strDrink} instructions={strInstructions} ingredients={ingredients} measurements={measurements} />
           )
         })
         }
