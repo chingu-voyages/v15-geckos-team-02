@@ -16,11 +16,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.fetch("rum")
+    this.fetch("search","?s=","rum")
   }
   
-  fetch(search) {
-    fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${search}`)
+  fetch(queryType, extension, queryFor) {
+    fetch(`https://www.thecocktaildb.com/api/json/v1/1/${queryType}.php${extension}${queryFor}`)
     .then(result => result.json())
     .then(
       (result) => {
@@ -39,8 +39,12 @@ class App extends Component {
 
   handleEnterPressed = event => {
     if(event.key === "Enter") {
-      this.fetch(this.state.search)
+      this.fetch("search", "?s=", this.state.search)
     }
+  }
+
+    handleClickLetter = event => {
+      this.fetch("search", "?f=", event.target.innerHTML)
   }
 
   render () {
@@ -63,7 +67,7 @@ class App extends Component {
           )
         })
         }       
-        <FirstLetterFilter />
+        <FirstLetterFilter handleClickLetter={this.handleClickLetter} />
         </ErrorBoundary>
       </div>
     )
