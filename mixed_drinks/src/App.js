@@ -3,6 +3,7 @@ import './App.css';
 import Input from './components/Input';
 import Card from './components/Card';
 import ErrorBoundary from './components/ErrorBoundary';
+import FirstLetterFilter from './components/FirstLetterFilter';
 
 class App extends Component {
   constructor(props) {
@@ -61,7 +62,8 @@ class App extends Component {
             <Card key={idDrink} id={idDrink} drinkName={strDrink} instructions={strInstructions} ingredients={ingredients} measurements={measurements} />
           )
         })
-        }
+        }       
+        <FirstLetterFilter />
         </ErrorBoundary>
       </div>
     )
