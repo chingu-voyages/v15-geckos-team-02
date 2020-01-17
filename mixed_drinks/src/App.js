@@ -18,17 +18,23 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.fetch("search","?s=","rum")
+    this.fetch("search","?s=","rum", false)
   }
   
-  fetch(queryType, extension, queryFor) {
+  fetch(queryType, extension, queryFor, isDrillDown = false) {
     fetch(`https://www.thecocktaildb.com/api/json/v1/1/${queryType}.php${extension}${queryFor}`)
     .then(result => result.json())
     .then(
       (result) => {
-        this.setState({
+        isDrillDown ? this.setState({
           isLoaded: true,
-          drinks: result.drinks
+          drinks: result.drinks,
+          isDrillDown: true
+        }) :
+        this.setState({
+          drinks: result.drinks,      
+          isLoaded: true,   
+          isDrillDown: false
         })
       }
     ).catch(error => {
@@ -46,8 +52,7 @@ class App extends Component {
   }
 
   handleClick = event => {
-    parseInt(event.target.id) >= 1 ? this.fetch("lookup", "?i=", event.target.id) : this.fetch("search", "?f=", event.target.innerHTML)
-    parseInt(event.target.id) >= 1 ? this.setState({isDrillDown: true}) : this.setState({isDrillDown: false})
+    parseInt(event.target.id) >= 1 ? this.fetch("lookup", "?i=", event.target.id, true) : this.fetch("search", "?f=", event.target.innerHTML)
   }
   
 
@@ -60,9 +65,8 @@ class App extends Component {
         {!this.state.isLoaded ? "Loading..." :
         this.state.drinks === null ? <h1>No Drinks Found</h1>: 
         this.state.drinks.map(drink => {
-          const {idDrink, strDrink, strInstructions, strDrinkThumb} = drink;
           return (
-            <Card key={idDrink} id={idDrink} strDrinkThumb={strDrinkThumb} drinkName={strDrink} handleClick={this.handleClick} />
+            <Card key={drink.idDrink} id={drink.idDrink} strDrinkThumb={drink.strDrinkThumb} drinkName={drink.strDrink} handleClick={this.handleClick} />
           )
         })
         }
