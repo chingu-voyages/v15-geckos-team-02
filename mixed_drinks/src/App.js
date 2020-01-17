@@ -56,14 +56,14 @@ class App extends Component {
         {!this.state.isLoaded ? "Loading..." :
         this.state.drinks === null ? <h1>No Drinks Found</h1>: 
         this.state.drinks.map(drink => {
-          const {idDrink, strDrink, strInstructions} = drink;
+          const {idDrink, strDrink, strInstructions, strDrinkThumb} = drink;
           const propertyName = Object.getOwnPropertyNames(drink);
           const strIngredient = propertyName.filter(propertyName => propertyName.startsWith("strIngredient"));
           const ingredients = strIngredient.map(ingredient => drink[ingredient]);
           const strMeasure = propertyName.filter(propertyName => propertyName.startsWith("strMeasure"));
           const measurements = strMeasure.map(measure => drink[measure])
           return (
-            <Card key={idDrink} id={idDrink} drinkName={strDrink} instructions={strInstructions} ingredients={ingredients} measurements={measurements} />
+            <Card key={idDrink} id={idDrink} strDrinkThumb={strDrinkThumb} drinkName={strDrink} instructions={strInstructions} ingredients={ingredients} measurements={measurements} />
           )
         })
         }       
