@@ -4,29 +4,37 @@ import Input from './components/Input';
 import Card from './components/Card';
 import ErrorBoundary from './components/ErrorBoundary';
 import FirstLetterFilter from './components/FirstLetterFilter';
+import DrinkDetails from './components/DrinkDetails';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       search: "",
+      drinks: [],
       isLoaded: false,
-      drinks: []
+      isDrillDown: false,
     }
   }
 
   componentDidMount() {
-    this.fetch("search","?s=","rum")
+    this.fetch("search","?s=","rum", false)
   }
   
-  fetch(queryType, extension, queryFor) {
+  fetch(queryType, extension, queryFor, isDrillDown = false) {
     fetch(`https://www.thecocktaildb.com/api/json/v1/1/${queryType}.php${extension}${queryFor}`)
     .then(result => result.json())
     .then(
       (result) => {
-        this.setState({
+        isDrillDown ? this.setState({
           isLoaded: true,
-          drinks: result.drinks
+          drinks: result.drinks,
+          isDrillDown: true
+        }) :
+        this.setState({
+          drinks: result.drinks,      
+          isLoaded: true,   
+          isDrillDown: false
         })
       }
     ).catch(error => {
@@ -43,9 +51,10 @@ class App extends Component {
     }
   }
 
-    handleClickLetter = event => {
-      this.fetch("search", "?f=", event.target.innerHTML)
+  handleClick = event => {
+    parseInt(event.target.id) >= 1 ? this.fetch("lookup", "?i=", event.target.id, true) : this.fetch("search", "?f=", event.target.innerHTML)
   }
+  
 
   render () {
     return (
@@ -56,18 +65,22 @@ class App extends Component {
         {!this.state.isLoaded ? "Loading..." :
         this.state.drinks === null ? <h1>No Drinks Found</h1>: 
         this.state.drinks.map(drink => {
-          const {idDrink, strDrink, strInstructions} = drink;
+          return (
+            <Card key={drink.idDrink} id={drink.idDrink} strDrinkThumb={drink.strDrinkThumb} drinkName={drink.strDrink} handleClick={this.handleClick} />
+          )
+        })
+        }
+        {!this.state.isDrillDown ? null : this.state.drinks.map(drink => {
           const propertyName = Object.getOwnPropertyNames(drink);
           const strIngredient = propertyName.filter(propertyName => propertyName.startsWith("strIngredient"));
           const ingredients = strIngredient.map(ingredient => drink[ingredient]);
           const strMeasure = propertyName.filter(propertyName => propertyName.startsWith("strMeasure"));
           const measurements = strMeasure.map(measure => drink[measure])
           return (
-            <Card key={idDrink} id={idDrink} drinkName={strDrink} instructions={strInstructions} ingredients={ingredients} measurements={measurements} />
+            <DrinkDetails strInstructions={drink.strInstructions} ingredients={ingredients} measurements={measurements}/>
           )
-        })
-        }       
-        <FirstLetterFilter handleClickLetter={this.handleClickLetter} />
+        })}
+        <FirstLetterFilter handleClick={this.handleClick} />
         </ErrorBoundary>
       </div>
     )
