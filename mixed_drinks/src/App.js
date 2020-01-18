@@ -18,7 +18,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.fetch("search","?s=","rum", false)
+    this.fetch("search","?s=","rum")
   }
   
   fetch(queryType, extension, queryFor, isDrillDown = false) {
@@ -71,13 +71,10 @@ class App extends Component {
         })
         }
         {!this.state.isDrillDown ? null : this.state.drinks.map(drink => {
-          const propertyName = Object.getOwnPropertyNames(drink);
-          const strIngredient = propertyName.filter(propertyName => propertyName.startsWith("strIngredient"));
-          const ingredients = strIngredient.map(ingredient => drink[ingredient]);
-          const strMeasure = propertyName.filter(propertyName => propertyName.startsWith("strMeasure"));
-          const measurements = strMeasure.map(measure => drink[measure])
+          const ingredients = Object.getOwnPropertyNames(drink).filter(propertyName => propertyName.startsWith("strIngredient")).map(ingredient => drink[ingredient]);
+          const measurements = Object.getOwnPropertyNames(drink).filter(propertyName => propertyName.startsWith("strMeasure")).map(measure => drink[measure]);
           return (
-            <DrinkDetails strInstructions={drink.strInstructions} ingredients={ingredients} measurements={measurements}/>
+            <DrinkDetails instructions={drink.strInstructions} ingredients={ingredients} measurements={measurements} />
           )
         })}
         <FirstLetterFilter handleClick={this.handleClick} />
