@@ -66,7 +66,7 @@ class App extends Component {
         this.state.drinks === null ? <h1>No Drinks Found</h1>: 
         this.state.drinks.map(drink => {
           return (
-            <Card key={drink.idDrink} id={drink.idDrink} strDrinkThumb={drink.strDrinkThumb} drinkName={drink.strDrink} handleClick={this.handleClick} />
+            <Card key={drink.idDrink} id={drink.idDrink} strDrinkThumb={drink.strDrinkThumb} drinkName={drink.strDrink} handleClick={this.handleClick} drinkGlass={drink.strGlass}/>
           )
         })
         }
