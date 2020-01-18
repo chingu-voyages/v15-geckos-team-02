@@ -3,7 +3,7 @@ import React from 'react';
 const DrinkDetails = props => {
     return (
         <div>
-            <p>{props.strInstructions}</p>
+            <p>{props.instructions}</p>
             <ul className="card__list">
                 {props.ingredients.map((ingredient, index) => {
                     return props.measurements[index] === null ? 
