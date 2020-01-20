@@ -16,7 +16,7 @@ class AddDrinksButton extends Component {
     render () {
         return(
             <div>
-                <button type="submit" onClick={this.getDrink}>Submit</button>
+                <button type="submit" className="drinkBtn" onClick={this.getDrink}>Submit</button>
             </div>
         )
     }  
