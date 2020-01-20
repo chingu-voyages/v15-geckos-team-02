@@ -2,7 +2,7 @@
     border: 1px solid #c5c5c5;
     border-radius: 3px;
     width: 280px;
-    height: 300px;
+    height: 320px;
     float: left;
     margin: 10px;
     box-shadow: 1px 2px 2px #eeee;
@@ -16,4 +16,9 @@
 .card__list-item {
     text-align: left;
     margin-left: 20%;
+}
+
+.button {
+    display: inline-block;
+    margin-left: 0 auto;
 }
