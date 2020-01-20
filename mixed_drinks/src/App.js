@@ -12,13 +12,14 @@ class App extends Component {
     this.state = {
       search: "",
       drinks: [],
+      drinkIds: [],
       isLoaded: false,
       isDrillDown: false,
     }
   }
 
   componentDidMount() {
-    this.fetch("search","?s=","rum")
+    this.fetch("search","?s=","rum");
   }
   
   fetch(queryType, extension, queryFor, isDrillDown = false) {
@@ -34,27 +35,32 @@ class App extends Component {
         this.setState({
           drinks: result.drinks,      
           isLoaded: true,   
-          isDrillDown: false
+          isDrillDown: false,
+          drinkIds: result.drinks.map( drink => drink["idDrink"]),
         })
       }
     ).catch(error => {
-      console.error('Error:', error)
+      console.error('Error:', error);
     })
   }
+
   handleChange = event => {
     this.setState({search: event.target.value});
   }
 
   handleEnterPressed = event => {
     if(event.key === "Enter") {
-      this.fetch("search", "?s=", this.state.search)
+      this.fetch("search", "?s=", this.state.search);
     }
   }
 
   handleClick = event => {
-    parseInt(event.target.id) >= 1 ? this.fetch("lookup", "?i=", event.target.id, true) : this.fetch("search", "?f=", event.target.innerHTML)
+    parseInt(event.target.id) >= 1 ? this.fetch("lookup", "?i=", event.target.id, true) : this.fetch("search", "?f=", event.target.innerHTML);
   }
-  
+
+  handlePreviousNext = event => {
+    this.fetch("lookup", "?i=", event.target.id, true);
+  }  
 
   render () {
     return (
@@ -66,7 +72,8 @@ class App extends Component {
         this.state.drinks === null ? <h1>No Drinks Found</h1>: 
         this.state.drinks.map(drink => {
           return (
-            <Card key={drink.idDrink} id={drink.idDrink} strDrinkThumb={drink.strDrinkThumb} drinkName={drink.strDrink} handleClick={this.handleClick} drinkGlass={drink.strGlass}/>
+            <Card key={drink.idDrink} id={drink.idDrink} strDrinkThumb={drink.strDrinkThumb} drinkName={drink.strDrink} handleClick={this.handleClick} drinkGlass={drink.strGlass} 
+            isDrillDown={this.state.isDrillDown} drinkIds={this.state.drinkIds} handlePreviousNext={this.handlePreviousNext} />
           )
         })
         }
