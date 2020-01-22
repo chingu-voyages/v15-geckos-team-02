@@ -19,11 +19,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.fetch("search","?s=","rum");
+    this.fetch(this.urlPathModifier("search"), "rum");
   }
   
-  fetch(queryType, extension, queryFor, isDrillDown = false) {
-    fetch(`https://www.thecocktaildb.com/api/json/v1/1/${queryType}.php${extension}${queryFor}`)
+
+  fetch(urlPath, drinkQuery, isDrillDown = false) {
+    fetch(`https://www.thecocktaildb.com/api/json/v1/1/${urlPath}${drinkQuery}`)
     .then(result => result.json())
     .then(
       (result) => {
@@ -36,7 +37,7 @@ class App extends Component {
           drinks: result.drinks,      
           isLoaded: true,   
           isDrillDown: false,
-          drinkIds: result.drinks.map( drink => drink["idDrink"]),
+          drinkIds: result.drinks === null ? null : result.drinks.map(drink => drink["idDrink"]),
         })
       }
     ).catch(error => {
@@ -44,49 +45,55 @@ class App extends Component {
     })
   }
 
-  handleChange = event => {
+  urlPathModifier = (queryType) => {
+    if(queryType === "lookup") {
+      return "lookup.php?i=";
+    }
+    if(queryType === "random") {
+      return "random.php";
+    }
+    if(queryType === "search") {
+      return "search.php?s=";
+    }
+    if(queryType === "searchFirstLetter") {
+      return "search.php?f=";
+    }
+  }
+
+  handleInputChange = event => {
     this.setState({search: event.target.value});
   }
 
   handleEnterPressed = event => {
     if(event.key === "Enter") {
-      this.fetch("search", "?s=", this.state.search);
+      this.fetch(this.urlPathModifier("search"), this.state.search);
     }
   }
 
   handleClick = event => {
-    parseInt(event.target.id) >= 1 ? this.fetch("lookup", "?i=", event.target.id, true) : this.fetch("search", "?f=", event.target.innerHTML);
+    parseInt(event.target.id) >= 1 ? this.fetch(this.urlPathModifier("lookup"), event.target.id, true) : this.fetch(this.urlPathModifier("searchFirstLetter"), event.target.innerHTML);
   }
-
-  handlePreviousNext = event => {
-    this.fetch("lookup", "?i=", event.target.id, true);
-  }  
 
   render () {
     return (
+      <ErrorBoundary>
       <div className="App">
         <h1>Mixed Drinks</h1>
-        <Input handleChange={this.handleChange} handleEnterPressed={this.handleEnterPressed} />
-        <ErrorBoundary>
+        <Input handleInputChange={this.handleInputChange} handleEnterPressed={this.handleEnterPressed} />
         {!this.state.isLoaded ? "Loading..." :
         this.state.drinks === null ? <h1>No Drinks Found</h1>: 
-        this.state.drinks.map(drink => {
-          return (
-            <Card key={drink.idDrink} id={drink.idDrink} strDrinkThumb={drink.strDrinkThumb} drinkName={drink.strDrink} handleClick={this.handleClick} drinkGlass={drink.strGlass} 
-            isDrillDown={this.state.isDrillDown} drinkIds={this.state.drinkIds} handlePreviousNext={this.handlePreviousNext} />
-          )
-        })
-        }
+        this.state.drinks.map(drink =>
+        <Card key={drink.idDrink} id={drink.idDrink} strDrinkThumb={drink.strDrinkThumb} drinkName={drink.strDrink} handleClick={this.handleClick} drinkGlass={drink.strGlass} 
+        isDrillDown={this.state.isDrillDown} drinkIds={this.state.drinkIds} />
+        )}
         {!this.state.isDrillDown ? null : this.state.drinks.map(drink => {
           const ingredients = Object.getOwnPropertyNames(drink).filter(propertyName => propertyName.startsWith("strIngredient")).map(ingredient => drink[ingredient]);
           const measurements = Object.getOwnPropertyNames(drink).filter(propertyName => propertyName.startsWith("strMeasure")).map(measure => drink[measure]);
-          return (
-            <DrinkDetails instructions={drink.strInstructions} ingredients={ingredients} measurements={measurements} />
-          )
+            return <DrinkDetails key={drink.idDrink} instructions={drink.strInstructions} ingredients={ingredients} measurements={measurements} />
         })}
         <FirstLetterFilter handleClick={this.handleClick} />
-        </ErrorBoundary>
       </div>
+      </ErrorBoundary>
     )
   }
 }
