@@ -1,24 +1,12 @@
 import React, { Component } from 'react';
+import './AddDrinksButton.css';
 
 
-class AddDrinksButton extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-
-        }
-    }
-
-    getDrink() {
-        console.log('clicked');
-    }
-
-    render () {
-        return(
-            <div>
-                <button type="submit" className="drinkBtn" onClick={this.getDrink}>Submit</button>
-            </div>
-        )
-    }  
+const AddDrinksButton = props => {
+    return(
+        <div>
+            <button type="submit" className="drinkBtn" onClick={props.addToList}>Add To List</button>
+        </div>
+    )
 }
 export default AddDrinksButton;

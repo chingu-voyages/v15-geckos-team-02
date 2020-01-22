@@ -1,5 +1,6 @@
 import React from 'react';
 import './Card.css';
+import AddDrinksButton from './AddDrinksButton';
 
 const Card = props => {
     const drinkCount = props.drinkIds.length;
@@ -20,6 +21,7 @@ const Card = props => {
                 <button id={props.drinkIds[currentDrinkIndex - 1]} onClick={props.handlePreviousNext} style={stylePrevious}>Previous</button>
                 <button id={props.drinkIds[currentDrinkIndex + 1]} onClick={props.handlePreviousNext} style={styleNext}>Next</button>
             </div> : null}
+            <AddDrinksButton />
         </div>
     )
 }

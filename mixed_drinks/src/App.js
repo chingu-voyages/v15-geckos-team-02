@@ -5,7 +5,6 @@ import Card from './components/Card';
 import ErrorBoundary from './components/ErrorBoundary';
 import FirstLetterFilter from './components/FirstLetterFilter';
 import DrinkDetails from './components/DrinkDetails';
-import AddDrinksButton from './components/AddDrinksButton';
 
 class App extends Component {
   constructor(props) {
@@ -68,7 +67,6 @@ class App extends Component {
       <div className="App">
         <h1>Mixed Drinks</h1>
         <Input handleChange={this.handleChange} handleEnterPressed={this.handleEnterPressed} />
-        <AddDrinksButton />
         <ErrorBoundary>
         {!this.state.isLoaded ? "Loading..." :
         this.state.drinks === null ? <h1>No Drinks Found</h1>: 
