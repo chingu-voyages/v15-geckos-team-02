@@ -5,6 +5,7 @@ import Card from './components/Card';
 import ErrorBoundary from './components/ErrorBoundary';
 import FirstLetterFilter from './components/FirstLetterFilter';
 import DrinkDetails from './components/DrinkDetails';
+import RandomDrink from './components/RandomDrink';
 
 class App extends Component {
   constructor(props) {
@@ -91,6 +92,7 @@ class App extends Component {
           const measurements = Object.getOwnPropertyNames(drink).filter(propertyName => propertyName.startsWith("strMeasure")).map(measure => drink[measure]);
             return <DrinkDetails key={drink.idDrink} instructions={drink.strInstructions} ingredients={ingredients} measurements={measurements} />
         })}
+        <RandomDrink/>
         <FirstLetterFilter handleClick={this.handleClick} />
       </div>
       </ErrorBoundary>
