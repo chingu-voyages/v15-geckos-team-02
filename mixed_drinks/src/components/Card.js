@@ -12,16 +12,21 @@ const Card = props => {
         pointerEvents: currentDrinkIndex + 1 === drinkCount ? 'none' : null
 
     }
+    const CardStyle = {
+        backgroundImage: `url(${props.strDrinkThumb})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+    }
     return (
-        <div className="card" key={props.id}>
-            <h3>{props.drinkName}</h3>
-            <img src={props.strDrinkThumb} id={props.id} onClick={props.handleClick} height={"230px"} width={"220px"} alt={`A ${props.drinkName} served in a ${props.drinkGlass}`} />
+        <div className="card tc grow dib w-27" key={props.id} style={CardStyle} id={props.id} onClick={props.handleClick}>            
+            <h3 id={props.id} onClick={props.handleClick} className='bg-white-80 pa1'>{props.drinkName}</h3>            
             {props.isDrillDown ? 
             <div>
                 <button id={props.drinkIds[currentDrinkIndex - 1]} onClick={props.handleClick} style={stylePrevious}>Previous</button>
                 <button id={props.drinkIds[currentDrinkIndex + 1]} onClick={props.handleClick} style={styleNext}>Next</button>
             </div> : null}
-            <AddDrinksButton />
+            <AddDrinksButton />           
         </div>
     )
 }
