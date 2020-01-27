@@ -5,6 +5,7 @@ import Card from './components/Card';
 import ErrorBoundary from './components/ErrorBoundary';
 import FirstLetterFilter from './components/FirstLetterFilter';
 import DrinkDetails from './components/DrinkDetails';
+import { Constants } from './components/Constants';
 
 class App extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.fetch(this.urlPathModifier("search"), "rum");
+    this.fetch(Constants.search, "rum");
   }
   
 
@@ -45,33 +46,18 @@ class App extends Component {
     })
   }
 
-  urlPathModifier = (queryType) => {
-    if(queryType === "lookup") {
-      return "lookup.php?i=";
-    }
-    if(queryType === "random") {
-      return "random.php";
-    }
-    if(queryType === "search") {
-      return "search.php?s=";
-    }
-    if(queryType === "searchFirstLetter") {
-      return "search.php?f=";
-    }
-  }
-
   handleInputChange = event => {
     this.setState({search: event.target.value});
   }
 
   handleEnterPressed = event => {
     if(event.key === "Enter") {
-      this.fetch(this.urlPathModifier("search"), this.state.search);
+      this.fetch(Constants.search, this.state.search);
     }
   }
 
   handleClick = event => {
-    parseInt(event.target.id) >= 1 ? this.fetch(this.urlPathModifier("lookup"), event.target.id, true) : this.fetch(this.urlPathModifier("searchFirstLetter"), event.target.innerHTML);
+    parseInt(event.target.id) >= 1 ? this.fetch(Constants.lookup, event.target.id, true) : this.fetch(Constants.searchFirstLetter, event.target.innerHTML);
   }
 
   render () {
