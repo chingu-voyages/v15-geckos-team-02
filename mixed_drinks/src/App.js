@@ -24,8 +24,8 @@ class App extends Component {
   }
   
 
-  fetch(urlPath, drinkQuery, isDrillDown = false) {
-    fetch(`https://www.thecocktaildb.com/api/json/v1/1/${urlPath}${drinkQuery}`)
+  fetch(queryType, queryDrink, isDrillDown = false) {
+    fetch(`${Constants.urlPath}${queryType}${queryDrink}`)
     .then(result => result.json())
     .then(
       (result) => {
@@ -53,6 +53,13 @@ class App extends Component {
   handleEnterPressed = event => {
     if(event.key === "Enter") {
       this.fetch(Constants.search, this.state.search);
+      event.target.value = "";
+    }
+  }
+
+  handleBannerClick = () => {
+    if(this.state.isDrillDown) {
+      this.fetch(Constants.search, this.state.search);
     }
   }
 
@@ -64,7 +71,7 @@ class App extends Component {
     return (
       <ErrorBoundary>
       <div className="App tc">
-        <h1>Mixed Drinks</h1>
+        <h1 onClick={this.handleBannerClick}>Mixed Drinks</h1>
         <Input handleInputChange={this.handleInputChange} handleEnterPressed={this.handleEnterPressed} />
         {!this.state.isLoaded ? "Loading..." :
         this.state.drinks === null ? <h1>No Drinks Found</h1>: 
