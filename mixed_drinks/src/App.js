@@ -87,13 +87,14 @@ class App extends Component {
           drinkIds={this.state.drinkIds} 
         />
         )}
-        {!this.state.isDrillDown ? null : this.state.drinks.map(drink => {
-          const ingredients = Object.getOwnPropertyNames(drink).filter(propertyName => propertyName.startsWith("strIngredient")).map(ingredient => drink[ingredient]);
-          const measurements = Object.getOwnPropertyNames(drink).filter(propertyName => propertyName.startsWith("strMeasure")).map(measure => drink[measure]);
-            return <DrinkDetails key={drink.idDrink} instructions={drink.strInstructions} ingredients={ingredients} measurements={measurements} />
-        })}
+        {!this.state.isDrillDown ? null : 
+        <DrinkDetails 
+          key={this.state.drinks[0].idDrink} 
+          drink={this.state.drinks[0]}
+        />
+        }
         <FirstLetterFilter handleClick={this.handleClick} />
-      </div>
+        </div>
       </ErrorBoundary>
     )
   }
