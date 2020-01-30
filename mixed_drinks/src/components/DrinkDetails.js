@@ -1,14 +1,20 @@
 import React from 'react';
 
+const getDrinkValues = (drink, propertyNameStartsWith) => {
+    return Object.getOwnPropertyNames(drink).filter(drink => drink.startsWith(`${propertyNameStartsWith}`)).map(propertyName => drink[propertyName]);
+}
+
 const DrinkDetails = props => {
+    const ingredients = getDrinkValues(props.drink, "strIngredient");
+    const measurements = getDrinkValues(props.drink, "strMeasure");
     return (
         <div>
-            <p>{props.instructions}</p>
+            <p>{props.drink.strInstructions}</p>
             <ul className="card__list">
-                {props.ingredients.map((ingredient, index) => {
-                    return props.measurements[index] === null ? 
+                {ingredients.map((ingredient, index) => {
+                    return measurements[index] === null ? 
                     <li key={index} className="card__list-item">{ingredient}</li> : 
-                    <li key={index} className="card__list-item">{`${ingredient} - ${props.measurements[index]}`}</li>
+                    <li key={index} className="card__list-item">{`${measurements[index]} ${ingredient}`}</li>
                 })}
             </ul>
         </div>
