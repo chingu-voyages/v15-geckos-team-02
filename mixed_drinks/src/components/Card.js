@@ -14,7 +14,7 @@ const Card = props => {
         backgroundPosition: 'center',
     }
     return (
-        <div className="card tc grow dib w-27" title={`A ${props.drink.strDrink} served in a ${props.drink.drinkGlass}`} style={CardStyle} id={props.id} onClick={props.handleClick}>             
+        <div className="card tc grow dib w-27" title={`A ${props.drink.strDrink} served in a ${props.drink.strGlass}`} style={CardStyle} id={props.id} onClick={props.handleClick}>             
             <h3 id={props.id} className='bg-white-80 pa1'>{props.drink.strDrink}</h3>            
             {props.favoriteDrink ? null : props.isDrillDown ? 
             <div>
