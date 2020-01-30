@@ -21,7 +21,7 @@ const Card = props => {
                 <button id={props.drinkIds[currentDrinkIndex - 1]} onClick={props.handleClick} disabled={previousDisabled}>Previous</button>
                 <button id={props.drinkIds[currentDrinkIndex + 1]} onClick={props.handleClick} disabled={nextDisabled}>Next</button>
             </div> : null}
-            {props.favoriteDrink ? null: <AddDrinksButton addToList={() => props.addToList(props.drink)}/>}   
+            {props.favoriteDrink ? null: <AddDrinksButton addToFavoritesList={() => props.addToFavoritesList(props.drink)}/>}   
         </div>
     )
 }
