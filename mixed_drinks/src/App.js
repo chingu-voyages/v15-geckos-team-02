@@ -73,7 +73,7 @@ class App extends Component {
     let favoriteDrinkIds = favoriteDrinksCopy.map(drink => drink.idDrink)
     favoriteDrinksCopy.push(drinkToAdd);
     if(!favoriteDrinkIds.includes(drinkToAdd.idDrink)) {
-    this.setState({favoriteDrinks: favoriteDrinksCopy})
+      this.setState({favoriteDrinks: favoriteDrinksCopy});
     } 
   }
 
@@ -95,6 +95,7 @@ class App extends Component {
           drink={drink}
           handleClick={this.handleClick} 
           addToFavoritesList={this.addToFavoritesList}
+          favoriteDrinks={this.state.favoriteDrinks}
         />
         )}
         {!this.state.isDrillDown ? null : 
@@ -113,7 +114,8 @@ class App extends Component {
           isDrillDown={this.state.isDrillDown} 
           drinkIds={this.state.drinkIds} 
           drink={drink}
-          favoriteDrink={true}
+          isFavoriteDrink={true}
+          favoriteDrinks={this.state.favoriteDrinks}
           />
           )
         }
