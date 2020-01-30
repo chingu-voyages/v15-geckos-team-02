@@ -16,12 +16,12 @@ const Card = props => {
     return (
         <div className="card tc grow dib w-27" title={`A ${props.drinkName} served in a ${props.drinkGlass}`} style={CardStyle} id={props.id} onClick={props.handleClick}>             
             <h3 id={props.id} className='bg-white-80 pa1'>{props.drinkName}</h3>            
-            {props.isDrillDown ? 
+            {props.favoriteDrink ? null : props.isDrillDown ? 
             <div>
                 <button id={props.drinkIds[currentDrinkIndex - 1]} onClick={props.handleClick} disabled={previousDisabled}>Previous</button>
                 <button id={props.drinkIds[currentDrinkIndex + 1]} onClick={props.handleClick} disabled={nextDisabled}>Next</button>
             </div> : null}
-            <AddDrinksButton />           
+            {props.favoriteDrink ? null: <AddDrinksButton addToList={() => props.addToList(props.drink)}/>}   
         </div>
     )
 }

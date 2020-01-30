@@ -12,6 +12,7 @@ class App extends Component {
     super(props);
     this.state = {
       search: "",
+      favoriteDrinks: [],
       drinks: [],
       drinkIds: [],
       isLoaded: false,
@@ -67,6 +68,14 @@ class App extends Component {
     parseInt(event.target.id) >= 1 ? this.fetch(Constants.lookup, event.target.id, true) : this.fetch(Constants.searchFirstLetter, event.target.innerHTML);
   }
 
+  addToList = event => {
+    let favoriteDrinksCopy = [...this.state.favoriteDrinks];
+    let favoriteDrinkIds = favoriteDrinksCopy.map(drink => drink.idDrink)
+    favoriteDrinksCopy.push(event);
+    if(!favoriteDrinkIds.includes(event.idDrink))
+    this.setState({favoriteDrinks: favoriteDrinksCopy})
+  }
+
   render () {
     return (
       <ErrorBoundary>
@@ -85,13 +94,33 @@ class App extends Component {
           drinkGlass={drink.strGlass} 
           isDrillDown={this.state.isDrillDown} 
           drinkIds={this.state.drinkIds} 
+          drink={drink}
+          addToList={this.addToList}
         />
         )}
         {!this.state.isDrillDown ? null : 
         <DrinkDetails 
           key={this.state.drinks[0].idDrink} 
           drink={this.state.drinks[0]}
+          addToList={this.addToList}
         />
+        }
+        <h1 className="App tc">Favorite Drinks</h1>
+        {this.state.favoriteDrinks === null ? null :
+        this.state.favoriteDrinks.map(drink => 
+          <Card 
+          key={drink.idDrink} 
+          id={drink.idDrink} 
+          strDrinkThumb={drink.strDrinkThumb} 
+          drinkName={drink.strDrink} 
+          handleClick={this.handleClick} 
+          drinkGlass={drink.strGlass} 
+          isDrillDown={this.state.isDrillDown} 
+          drinkIds={this.state.drinkIds} 
+          drink={drink}
+          favoriteDrink={true}
+          />
+          )
         }
         <FirstLetterFilter handleClick={this.handleClick} />
         </div>
