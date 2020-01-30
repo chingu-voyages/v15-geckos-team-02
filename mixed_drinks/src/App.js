@@ -72,8 +72,9 @@ class App extends Component {
     let favoriteDrinksCopy = [...this.state.favoriteDrinks];
     let favoriteDrinkIds = favoriteDrinksCopy.map(drink => drink.idDrink)
     favoriteDrinksCopy.push(event);
-    if(!favoriteDrinkIds.includes(event.idDrink))
+    if(!favoriteDrinkIds.includes(event.idDrink)) {
     this.setState({favoriteDrinks: favoriteDrinksCopy})
+    } 
   }
 
   render () {
@@ -87,14 +88,12 @@ class App extends Component {
         this.state.drinks.map(drink =>
         <Card 
           key={drink.idDrink} 
-          id={drink.idDrink} 
-          strDrinkThumb={drink.strDrinkThumb} 
-          drinkName={drink.strDrink} 
-          handleClick={this.handleClick} 
-          drinkGlass={drink.strGlass} 
+          id={drink.idDrink}
+          drink={drink}
           isDrillDown={this.state.isDrillDown} 
           drinkIds={this.state.drinkIds} 
           drink={drink}
+          handleClick={this.handleClick} 
           addToList={this.addToList}
         />
         )}
@@ -110,11 +109,8 @@ class App extends Component {
         this.state.favoriteDrinks.map(drink => 
           <Card 
           key={drink.idDrink} 
-          id={drink.idDrink} 
-          strDrinkThumb={drink.strDrinkThumb} 
-          drinkName={drink.strDrink} 
-          handleClick={this.handleClick} 
-          drinkGlass={drink.strGlass} 
+          id={drink.idDrink}
+          handleClick={this.handleClick}
           isDrillDown={this.state.isDrillDown} 
           drinkIds={this.state.drinkIds} 
           drink={drink}
