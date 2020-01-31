@@ -1,6 +1,7 @@
 import React from 'react';
 import './Card.css';
 import AddDrinksButton from './AddDrinksButton';
+import Button from './Button';
 
 const Card = props => {
     const drinkCount = props.drinkIds.length;
@@ -12,18 +13,17 @@ const Card = props => {
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
+        cursor: 'pointer'
     }
     let favoriteDrinkIds = props.favoriteDrinks.map(drink => drink.idDrink);
     const isFavorite = favoriteDrinkIds.includes(props.id);
     return (
-        <div className="card tc grow dib w-27" title={`A ${props.drink.strDrink} served in a ${props.drink.strGlass}`} style={CardStyle} id={props.id} onClick={props.handleClick}>             
-            <h3 id={props.id} className='bg-white-80 pa1'>{props.drink.strDrink}</h3>            
-            {props.isFavoriteDrink ? null : <div>
-                <button id={props.drinkIds[currentDrinkIndex - 1]} onClick={props.handleClick} disabled={previousDisabled}>Previous</button>
-                <button id={props.drinkIds[currentDrinkIndex + 1]} onClick={props.handleClick} disabled={nextDisabled}>Next</button>
-            </div>}
-            {props.isFavoriteDrink ? null : !isFavorite ? <AddDrinksButton addToFavoritesList={() => props.addToFavoritesList(props.drink)} /> : null}   
-        </div>
+    <div className="card tc grow dib w-27" title={`A ${props.drink.strDrink} served in a ${props.drink.strGlass}`} style={CardStyle} id={props.id} onClick={props.handleClick}>
+        <h3 id={props.id} className='bg-white-80 pa1'>{props.drink.strDrink}</h3>            
+        <Button id={props.drinkIds[currentDrinkIndex - 1]} onClick={props.handleClick} disabled={previousDisabled}>Previous</Button>
+        <Button id={props.drinkIds[currentDrinkIndex + 1]} onClick={props.handleClick} disabled={nextDisabled}>Next</Button>
+        {!isFavorite ? <AddDrinksButton addToFavoritesList={() => props.addToFavoritesList(props.drink)} /> : null}
+    </div>
     )
 }
 
