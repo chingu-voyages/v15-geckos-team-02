@@ -20,9 +20,13 @@ const Card = props => {
     return (
     <div className="card tc grow dib w-27" title={`A ${props.drink.strDrink} served in a ${props.drink.strGlass}`} style={CardStyle} id={props.id} onClick={props.handleClick}>
         <h3 id={props.id} className='bg-white-80 pa1'>{props.drink.strDrink}</h3>            
-        <Button id={props.drinkIds[currentDrinkIndex - 1]} onClick={props.handleClick} disabled={previousDisabled}>Previous</Button>
-        <Button id={props.drinkIds[currentDrinkIndex + 1]} onClick={props.handleClick} disabled={nextDisabled}>Next</Button>
-        {!isFavorite ? <AddDrinksButton addToFavoritesList={() => props.addToFavoritesList(props.drink)} /> : null}
+        {props.isDrillDown ? 
+        <div> 
+            <Button id={props.drinkIds[currentDrinkIndex - 1]} onClick={props.handleClick} disabled={previousDisabled}>Previous</Button>
+            <Button id={props.drinkIds[currentDrinkIndex + 1]} onClick={props.handleClick} disabled={nextDisabled}>Next</Button> 
+        </div>
+        : null}
+        {!isFavorite ? <AddDrinksButton addToFavoriteDrinks={() => props.addToFavoriteDrinks(props.drink)} /> : null}
     </div>
     )
 }
