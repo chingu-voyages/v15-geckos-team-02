@@ -5,6 +5,7 @@ import Card from './components/Card';
 import ErrorBoundary from './components/ErrorBoundary';
 import FirstLetterFilter from './components/FirstLetterFilter';
 import DrinkDetails from './components/DrinkDetails';
+import CardFavoriteDrink from './components/CardFavoriteDrink';
 import { Constants } from './components/Constants';
 
 class App extends Component {
@@ -12,6 +13,7 @@ class App extends Component {
     super(props);
     this.state = {
       search: "",
+      favoriteDrinks: [],
       drinks: [],
       drinkIds: [],
       isLoaded: false,
@@ -67,9 +69,17 @@ class App extends Component {
     parseInt(event.target.id) >= 1 ? this.fetch(Constants.lookup, event.target.id, true) : this.fetch(Constants.searchFirstLetter, event.target.innerHTML);
   }
 
+  addToFavoritesList = drinkToAdd => {
+    let favoriteDrinksCopy = [...this.state.favoriteDrinks];
+    let favoriteDrinkIds = favoriteDrinksCopy.map(drink => drink.idDrink)
+    favoriteDrinksCopy.push(drinkToAdd);
+    if(!favoriteDrinkIds.includes(drinkToAdd.idDrink)) {
+      this.setState({favoriteDrinks: favoriteDrinksCopy});
+    } 
+  }
   render () {
     return (
-      <ErrorBoundary>
+    <ErrorBoundary>
       <div className="App tc">
         <h1 onClick={this.handleBannerClick}>Mixed Drinks</h1>
         <Input handleInputChange={this.handleInputChange} handleEnterPressed={this.handleEnterPressed} />
@@ -78,13 +88,13 @@ class App extends Component {
         this.state.drinks.map(drink =>
         <Card 
           key={drink.idDrink} 
-          id={drink.idDrink} 
-          strDrinkThumb={drink.strDrinkThumb} 
-          drinkName={drink.strDrink} 
-          handleClick={this.handleClick} 
-          drinkGlass={drink.strGlass} 
+          id={drink.idDrink}
+          drink={drink}
           isDrillDown={this.state.isDrillDown} 
-          drinkIds={this.state.drinkIds} 
+          drinkIds={this.state.drinkIds}
+          handleClick={this.handleClick} 
+          addToFavoritesList={this.addToFavoritesList}
+          favoriteDrinks={this.state.favoriteDrinks}
         />
         )}
         {!this.state.isDrillDown ? null : 
@@ -93,8 +103,21 @@ class App extends Component {
           drink={this.state.drinks[0]}
         />
         }
+        <h1 className="App tc">Favorite Drinks</h1>
+        {this.state.favoriteDrinks === null ? null :
+        this.state.favoriteDrinks.map(drink =>
+        <CardFavoriteDrink 
+          key={drink.idDrink} 
+          id={drink.idDrink}
+          handleClick={this.handleClick}
+          isDrillDown={this.state.isDrillDown} 
+          drinkIds={this.state.drinkIds} 
+          drink={drink}
+        />
+        )
+        }
         <FirstLetterFilter handleClick={this.handleClick} />
-        </div>
+      </div>
       </ErrorBoundary>
     )
   }
