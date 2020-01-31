@@ -1,0 +1,21 @@
+.Fav_drinks {
+    width: 30%;
+    position: relative;
+    margin-left: 800px;
+    top: 90px;
+}
+
+.selectDrinks {
+    padding: 3px 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.selectDrinks:hover {
+    background-color: #f1615a;
+    color: #fff
+}
