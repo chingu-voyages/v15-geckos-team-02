@@ -1,11 +1,23 @@
 .card {
-    border: 1px solid #c5c5c5;
+    /* border: 1px solid #c5c5c5; */
     border-radius: 3px;
     width: 260px;
     height: 320px;
     float: left;
     margin: 10px;
-    box-shadow: 1px 2px 2px #eeee;
+    background-color: white;
+    /* box-shadow: 1px 2px 2px #eeee; */
+    box-shadow:
+    /* The top layer shadow */
+        0 1px 1px rgba(0,0,0,0.15),
+            /* The second layer */
+        0 10px 0 -5px #eee,
+            /* The second layer shadow */
+        0 10px 1px -4px rgba(0,0,0,0.15),
+            /* The third layer */
+        0 20px 0 -10px #eee,
+            /* The third layer shadow */
+        0 20px 1px -9px rgba(0,0,0,0.15);
 }
 .card__list {
     padding: 0px;
