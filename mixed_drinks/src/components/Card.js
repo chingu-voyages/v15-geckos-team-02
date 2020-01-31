@@ -13,15 +13,17 @@ const Card = props => {
 
     }
     return (
-        <div className="card" key={props.id}>
-            <h3>{props.drinkName}</h3>
-            <img src={props.strDrinkThumb} id={props.id} onClick={props.handleClick} height={"230px"} width={"220px"} alt={`A ${props.drinkName} served in a ${props.drinkGlass}`} />
-            {props.isDrillDown ? 
-            <div>
-                <button id={props.drinkIds[currentDrinkIndex - 1]} onClick={props.handleClick} style={stylePrevious}>Previous</button>
-                <button id={props.drinkIds[currentDrinkIndex + 1]} onClick={props.handleClick} style={styleNext}>Next</button>
-            </div> : null}
-            <AddDrinksButton />
+        <div className="card-section">
+            <div className="card" key={props.id}>
+                <h3>{props.drinkName}</h3>
+                <img src={props.strDrinkThumb} id={props.id} onClick={props.handleClick} height={"230px"} width={"220px"} alt={`A ${props.drinkName} served in a ${props.drinkGlass}`} />
+                {props.isDrillDown ? 
+                <div>
+                    <button id={props.drinkIds[currentDrinkIndex - 1]} onClick={props.handleClick} style={stylePrevious}>Previous</button>
+                    <button id={props.drinkIds[currentDrinkIndex + 1]} onClick={props.handleClick} style={styleNext}>Next</button>
+                </div> : null}
+                <AddDrinksButton />
+            </div>
         </div>
     )
 }
