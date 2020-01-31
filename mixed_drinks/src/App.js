@@ -69,7 +69,7 @@ class App extends Component {
     parseInt(event.target.id) >= 1 ? this.fetch(Constants.lookup, event.target.id, true) : this.fetch(Constants.searchFirstLetter, event.target.innerHTML);
   }
 
-  addToFavoritesList = drinkToAdd => {
+  addToFavoriteDrinks = drinkToAdd => {
     let favoriteDrinksCopy = [...this.state.favoriteDrinks];
     let favoriteDrinkIds = favoriteDrinksCopy.map(drink => drink.idDrink)
     favoriteDrinksCopy.push(drinkToAdd);
@@ -93,7 +93,7 @@ class App extends Component {
           isDrillDown={this.state.isDrillDown} 
           drinkIds={this.state.drinkIds}
           handleClick={this.handleClick} 
-          addToFavoritesList={this.addToFavoritesList}
+          addToFavoriteDrinks={this.addToFavoriteDrinks}
           favoriteDrinks={this.state.favoriteDrinks}
         />
         )}
