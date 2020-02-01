@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './AddDrinksButton.css';
 
 
 const AddDrinksButton = props => {
     return(
         <div>
-            <button type="submit" className="drinkBtn" onClick={props.addToList}>Add To List</button>
+            <button className="drinkBtn" onClick={props.addToFavoriteDrinks}>Add To Favorites</button>
         </div>
     )
 }
