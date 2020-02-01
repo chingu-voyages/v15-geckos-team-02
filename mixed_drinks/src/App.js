@@ -5,7 +5,7 @@ import Card from './components/Card';
 import ErrorBoundary from './components/ErrorBoundary';
 import FirstLetterFilter from './components/FirstLetterFilter';
 import DrinkDetails from './components/DrinkDetails';
-import CardFavoriteDrink from './components/CardFavoriteDrink';
+import SelectedDrinks from './components/SelectedDrinks';
 import { Constants } from './components/Constants';
 
 class App extends Component {
@@ -83,6 +83,12 @@ class App extends Component {
       <div className="App tc">
         <h1 onClick={this.handleBannerClick}>Mixed Drinks</h1>
         <Input handleInputChange={this.handleInputChange} handleEnterPressed={this.handleEnterPressed} />
+        <SelectedDrinks
+          handleClick={this.handleClick}
+          isDrillDown={this.state.isDrillDown} 
+          drinkIds={this.state.drinkIds} 
+          favoriteDrinks={this.state.favoriteDrinks}
+        />
         {!this.state.isLoaded ? "Loading..." :
         this.state.drinks === null ? <h1>No Drinks Found</h1>: 
         this.state.drinks.map(drink =>
@@ -102,19 +108,6 @@ class App extends Component {
           key={this.state.drinks[0].idDrink} 
           drink={this.state.drinks[0]}
         />
-        }
-        <h1 className="App tc">Favorite Drinks</h1>
-        {this.state.favoriteDrinks === null ? null :
-        this.state.favoriteDrinks.map(drink =>
-        <CardFavoriteDrink 
-          key={drink.idDrink} 
-          id={drink.idDrink}
-          handleClick={this.handleClick}
-          isDrillDown={this.state.isDrillDown} 
-          drinkIds={this.state.drinkIds} 
-          drink={drink}
-        />
-        )
         }
         <FirstLetterFilter handleClick={this.handleClick} />
       </div>
