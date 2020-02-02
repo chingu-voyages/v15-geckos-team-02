@@ -5,13 +5,15 @@ import Card from './components/Card';
 import ErrorBoundary from './components/ErrorBoundary';
 import FirstLetterFilter from './components/FirstLetterFilter';
 import DrinkDetails from './components/DrinkDetails';
-import SelectedDrinks from './components/SelectedDrinks';
+import CardFavoriteDrink from './components/CardFavoriteDrink';
+import { Constants } from './components/Constants';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       search: "",
+      favoriteDrinks: [],
       drinks: [],
       drinkIds: [],
       isLoaded: false,
@@ -20,12 +22,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.fetch(this.urlPathModifier("search"), "rum");
+    this.fetch(Constants.search, "rum");
   }
   
 
-  fetch(urlPath, drinkQuery, isDrillDown = false) {
-    fetch(`https://www.thecocktaildb.com/api/json/v1/1/${urlPath}${drinkQuery}`)
+  fetch(queryType, queryDrink, isDrillDown = false) {
+    fetch(`${Constants.urlPath}${queryType}${queryDrink}`)
     .then(result => result.json())
     .then(
       (result) => {
@@ -46,53 +48,75 @@ class App extends Component {
     })
   }
 
-  urlPathModifier = (queryType) => {
-    if(queryType === "lookup") {
-      return "lookup.php?i=";
-    }
-    if(queryType === "random") {
-      return "random.php";
-    }
-    if(queryType === "search") {
-      return "search.php?s=";
-    }
-    if(queryType === "searchFirstLetter") {
-      return "search.php?f=";
-    }
-  }
-
   handleInputChange = event => {
     this.setState({search: event.target.value});
   }
 
   handleEnterPressed = event => {
     if(event.key === "Enter") {
-      this.fetch(this.urlPathModifier("search"), this.state.search);
+      this.fetch(Constants.search, this.state.search);
+      event.target.value = "";
+    }
+  }
+
+  handleBannerClick = () => {
+    if(this.state.isDrillDown) {
+      this.fetch(Constants.search, this.state.search);
     }
   }
 
   handleClick = event => {
-    parseInt(event.target.id) >= 1 ? this.fetch(this.urlPathModifier("lookup"), event.target.id, true) : this.fetch(this.urlPathModifier("searchFirstLetter"), event.target.innerHTML);
+    parseInt(event.target.id) >= 1 ? this.fetch(Constants.lookup, event.target.id, true) : this.fetch(Constants.searchFirstLetter, event.target.innerHTML);
   }
 
+  addToFavoriteDrinks = drinkToAdd => {
+    let favoriteDrinksCopy = [...this.state.favoriteDrinks];
+    let favoriteDrinkIds = favoriteDrinksCopy.map(drink => drink.idDrink)
+    favoriteDrinksCopy.push(drinkToAdd);
+    if(!favoriteDrinkIds.includes(drinkToAdd.idDrink)) {
+      this.setState({favoriteDrinks: favoriteDrinksCopy});
+    } 
+  }
   render () {
     return (
-      <ErrorBoundary>
-      <div className="App">
-        <h1>Mixed Drinks</h1>
+    <ErrorBoundary>
+      <div className="App tc">
+        <h1 onClick={this.handleBannerClick}>Mixed Drinks</h1>
         <Input handleInputChange={this.handleInputChange} handleEnterPressed={this.handleEnterPressed} />
         <SelectedDrinks />
         {!this.state.isLoaded ? "Loading..." :
         this.state.drinks === null ? <h1>No Drinks Found</h1>: 
         this.state.drinks.map(drink =>
-        <Card key={drink.idDrink} id={drink.idDrink} strDrinkThumb={drink.strDrinkThumb} drinkName={drink.strDrink} handleClick={this.handleClick} drinkGlass={drink.strGlass} 
-        isDrillDown={this.state.isDrillDown} drinkIds={this.state.drinkIds} />
+        <Card 
+          key={drink.idDrink} 
+          id={drink.idDrink}
+          drink={drink}
+          isDrillDown={this.state.isDrillDown} 
+          drinkIds={this.state.drinkIds}
+          handleClick={this.handleClick} 
+          addToFavoriteDrinks={this.addToFavoriteDrinks}
+          favoriteDrinks={this.state.favoriteDrinks}
+        />
         )}
-        {!this.state.isDrillDown ? null : this.state.drinks.map(drink => {
-          const ingredients = Object.getOwnPropertyNames(drink).filter(propertyName => propertyName.startsWith("strIngredient")).map(ingredient => drink[ingredient]);
-          const measurements = Object.getOwnPropertyNames(drink).filter(propertyName => propertyName.startsWith("strMeasure")).map(measure => drink[measure]);
-            return <DrinkDetails key={drink.idDrink} instructions={drink.strInstructions} ingredients={ingredients} measurements={measurements} />
-        })}
+        {!this.state.isDrillDown ? null : 
+        <DrinkDetails 
+          key={this.state.drinks[0].idDrink} 
+          drink={this.state.drinks[0]}
+        />
+        }
+        <h1 className="App tc">Favorite Drinks</h1>
+        {this.state.favoriteDrinks === null ? null :
+        this.state.favoriteDrinks.map(drink =>
+        <CardFavoriteDrink 
+          key={drink.idDrink} 
+          id={drink.idDrink}
+          handleClick={this.handleClick}
+          isDrillDown={this.state.isDrillDown} 
+          drinkIds={this.state.drinkIds} 
+          drink={drink}
+        />
+        )
+        }
         <FirstLetterFilter handleClick={this.handleClick} />
       </div>
       </ErrorBoundary>
