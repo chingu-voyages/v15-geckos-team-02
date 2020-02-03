@@ -60,16 +60,8 @@ class App extends Component {
     }
   }
 
-  handleBannerClick = () => {
-    if(this.state.isDrillDown) {
-      this.fetch(Constants.search, this.state.search)
-    }
-  }
-
-  onHomeClick = (event) => {
-          
+  onHomeClick = () => {
     this.fetch(Constants.search, "rum");
-  
   }
 
   handleClick = event => {
