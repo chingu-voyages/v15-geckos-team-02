@@ -6,6 +6,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import FirstLetterFilter from './components/FirstLetterFilter';
 import DrinkDetails from './components/DrinkDetails';
 import SelectedDrinks from './components/SelectedDrinks';
+import NavBar from './components/NavBar';
 import { Constants } from './components/Constants';
 
 class App extends Component {
@@ -63,10 +64,8 @@ class App extends Component {
     }
   }
 
-  handleBannerClick = () => {
-    if(this.state.isDrillDown) {
-      this.fetch(Constants.search, this.state.search);
-    }
+  onHomeClick = () => {
+    this.fetch(Constants.search, "rum");
   }
 
   handleClick = event => {
@@ -82,11 +81,12 @@ class App extends Component {
       localStorage.setItem(`${drinkToAdd.strDrink}`, JSON.stringify(drinkToAdd));
     } 
   }
+  
   render () {
     return (
     <ErrorBoundary>
       <div className="App tc">
-        <h1 onClick={this.handleBannerClick}>Mixed Drinks</h1>
+        <NavBar homeClick={this.onHomeClick}/>
         <Input handleInputChange={this.handleInputChange} handleEnterPressed={this.handleEnterPressed} />
         <SelectedDrinks
           handleClick={this.handleClick}
@@ -120,5 +120,6 @@ class App extends Component {
     )
   }
 }
+
 
 export default App;
