@@ -15,10 +15,12 @@ class App extends Component {
     this.state = {
       search: "",
       favoriteDrinks: [],
+      randomDrink: {},
       drinks: [],
       drinkIds: [],
       isLoaded: false,
       isDrillDown: false,
+      isRandom: false,
     }
   }
 
@@ -28,6 +30,7 @@ class App extends Component {
     const favoriteDrinks = [];
     favoriteDrinkKeys.forEach(drink => favoriteDrinks.push(JSON.parse(localStorage.getItem(drink))));
     this.setState({favoriteDrinks: favoriteDrinks})
+    this.fetchRandomDrink();
   }
   
 
@@ -46,6 +49,20 @@ class App extends Component {
           isLoaded: true,   
           isDrillDown: false,
           drinkIds: result.drinks === null ? null : result.drinks.map(drink => drink["idDrink"]),
+        })
+      }
+    ).catch(error => {
+      console.error('Error:', error);
+    })
+  }
+
+  fetchRandomDrink = () => {
+    fetch(`${Constants.urlPath}${Constants.random}`)
+    .then(result => result.json())
+    .then(
+      (result) => {
+        this.setState({
+          randomDrink: result.drinks[0]
         })
       }
     ).catch(error => {
@@ -81,6 +98,10 @@ class App extends Component {
       localStorage.setItem(`${drinkToAdd.strDrink}`, JSON.stringify(drinkToAdd));
     } 
   }
+
+  handleRandomDrink = () => {
+    this.fetchRandomDrink();
+  }
   
   render () {
     return (
@@ -112,6 +133,21 @@ class App extends Component {
         <DrinkDetails 
           key={this.state.drinks[0].idDrink} 
           drink={this.state.drinks[0]}
+        />
+        }
+        {!this.state.isLoaded ? null : 
+        this.state.isDrillDown ? null :
+        <Card 
+          key={this.state.randomDrink.idDrink} 
+          id={this.state.randomDrink.idDrink}
+          drink={this.state.randomDrink}
+          isDrillDown={this.state.isDrillDown} 
+          drinkIds={this.state.drinkIds}
+          favoriteDrinks={this.state.favoriteDrinks}
+          randomDrink={true}
+          addToFavoriteDrinks={this.addToFavoriteDrinks}
+          handleClick={this.handleClick} 
+          handleRandomDrink={this.handleRandomDrink}
         />
         }
         <FirstLetterFilter handleClick={this.handleClick} />
