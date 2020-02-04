@@ -5,11 +5,8 @@ import Card from './components/Card';
 import ErrorBoundary from './components/ErrorBoundary';
 import FirstLetterFilter from './components/FirstLetterFilter';
 import DrinkDetails from './components/DrinkDetails';
-<<<<<<< HEAD
-import RandomDrink from './components/RandomDrink';
-=======
 import { Constants } from './components/Constants';
->>>>>>> master
+import RandomDrink from './components/RandomDrink';
 
 class App extends Component {
   constructor(props) {
@@ -26,7 +23,6 @@ class App extends Component {
   componentDidMount() {
     this.fetch(Constants.search, "rum");
   }
-  
 
   fetch(queryType, queryDrink, isDrillDown = false) {
     fetch(`${Constants.urlPath}${queryType}${queryDrink}`)
@@ -43,7 +39,8 @@ class App extends Component {
           isLoaded: true,   
           isDrillDown: false,
           drinkIds: result.drinks === null ? null : result.drinks.map(drink => drink["idDrink"]),
-        })
+        });
+         
       }
     ).catch(error => {
       console.error('Error:', error);
@@ -67,6 +64,8 @@ class App extends Component {
     }
   }
 
+  // handleClick queries the api for the id of the clicked drink, returns details and sets drilldown to true
+  // if drinkid is invalid, returns list of cards using first letter of clicked drink? 
   handleClick = event => {
     parseInt(event.target.id) >= 1 ? this.fetch(Constants.lookup, event.target.id, true) : this.fetch(Constants.searchFirstLetter, event.target.innerHTML);
   }
@@ -78,36 +77,34 @@ class App extends Component {
         <h1 onClick={this.handleBannerClick}>Mixed Drinks</h1>
         <Input handleInputChange={this.handleInputChange} handleEnterPressed={this.handleEnterPressed} />
         {!this.state.isLoaded ? "Loading..." :
-        this.state.drinks === null ? <h1>No Drinks Found</h1>: 
-        this.state.drinks.map(drink =>
-        <Card 
-          key={drink.idDrink} 
-          id={drink.idDrink} 
-          strDrinkThumb={drink.strDrinkThumb} 
-          drinkName={drink.strDrink} 
-          handleClick={this.handleClick} 
-          drinkGlass={drink.strGlass} 
-          isDrillDown={this.state.isDrillDown} 
-          drinkIds={this.state.drinkIds} 
-        />
+          this.state.drinks === null ? <h1>No Drinks Found</h1>: 
+          this.state.drinks.map(drink =>
+          <Card 
+            key={drink.idDrink} 
+            id={drink.idDrink} 
+            strDrinkThumb={drink.strDrinkThumb} 
+            drinkName={drink.strDrink} 
+            handleClick={this.handleClick} 
+            drinkGlass={drink.strGlass} 
+            isDrillDown={this.state.isDrillDown} 
+            drinkIds={this.state.drinkIds} 
+          />
         )}
-<<<<<<< HEAD
-        {!this.state.isDrillDown ? null : this.state.drinks.map(drink => {
-          const ingredients = Object.getOwnPropertyNames(drink).filter(propertyName => propertyName.startsWith("strIngredient")).map(ingredient => drink[ingredient]);
-          const measurements = Object.getOwnPropertyNames(drink).filter(propertyName => propertyName.startsWith("strMeasure")).map(measure => drink[measure]);
-            return <DrinkDetails key={drink.idDrink} instructions={drink.strInstructions} ingredients={ingredients} measurements={measurements} />
-        })}
-        <RandomDrink/>
-=======
+        {/* Random Drink should return a card that is hooked to the objects in this.state */}
+        {/* Need to find some way to return isDrillDown state from RandomDrink to App */}
+        <RandomDrink 
+          handleClick={this.handleClick}
+          isDrillDown={this.state.isDrillDown} 
+        />
         {!this.state.isDrillDown ? null : 
         <DrinkDetails 
           key={this.state.drinks[0].idDrink} 
           drink={this.state.drinks[0]}
         />
         }
->>>>>>> master
         <FirstLetterFilter handleClick={this.handleClick} />
         </div>
+        
       </ErrorBoundary>
     )
   }
