@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Input from './components/Input';
 import Card from './components/Card';
+import CardRandomDrink from './components/CardRandomDrink';
 import ErrorBoundary from './components/ErrorBoundary';
 import FirstLetterFilter from './components/FirstLetterFilter';
 import DrinkDetails from './components/DrinkDetails';
@@ -82,7 +83,7 @@ class App extends Component {
   }
 
   onHomeClick = () => {
-    this.setState({isRandom: false});
+    this.setState({isRandom: false})
     this.fetch(Constants.search, "rum");
   }
 
@@ -119,20 +120,32 @@ class App extends Component {
         />
         {!this.state.isLoaded ? "Loading..." :
         this.state.drinks === null ? <h1>No Drinks Found</h1>: 
-        this.state.drinks.map(drink =>
-        <Card 
-          key={drink.idDrink} 
-          id={drink.idDrink}
-          drink={this.state.isDrillDown && this.state.isRandom ? this.state.randomDrink : drink}
-          isDrillDown={this.state.isDrillDown} 
-          drinkIds={this.state.drinkIds}
-          handleClick={this.handleClick} 
-          addToFavoriteDrinks={this.addToFavoriteDrinks}
-          favoriteDrinks={this.state.favoriteDrinks}
-          randomDrink={this.state.isRandom}
-          handleRandomDrink={this.handleRandomDrink}
-        />
-        )}
+        !this.state.isRandom ? 
+          this.state.drinks.map(drink =>
+            <Card 
+              key={drink.idDrink} 
+              id={drink.idDrink}
+              drink={drink}
+              isDrillDown={this.state.isDrillDown} 
+              drinkIds={this.state.drinkIds}
+              handleClick={this.handleClick} 
+              addToFavoriteDrinks={this.addToFavoriteDrinks}
+              favoriteDrinks={this.state.favoriteDrinks}
+              randomDrink={this.state.isRandom}
+              handleRandomDrink={this.handleRandomDrink}
+            />
+            ) :
+            <CardRandomDrink
+              id={this.state.randomDrink.idDrink}
+              drink={this.state.randomDrink}
+              isDrillDown={this.state.isDrillDown} 
+              drinkIds={this.state.drinkIds}
+              addToFavoriteDrinks={this.addToFavoriteDrinks}
+              favoriteDrinks={this.state.favoriteDrinks}
+              randomDrink={this.state.isRandom}
+              handleRandomDrink={this.handleRandomDrink}
+            />
+        }
         {!this.state.isDrillDown ? null : 
         <DrinkDetails 
           key={this.state.drinks[0].idDrink} 
@@ -140,8 +153,8 @@ class App extends Component {
         />
         }
         {!this.state.isLoaded ? null : 
-        this.state.isDrillDown ? null :
-        <Card 
+        this.state.isDrillDown || this.state.isRandom ? null :
+        <CardRandomDrink
           key={this.state.randomDrink.idDrink} 
           id={this.state.randomDrink.idDrink}
           drink={this.state.randomDrink}

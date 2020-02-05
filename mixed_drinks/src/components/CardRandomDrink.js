@@ -3,11 +3,7 @@ import './Card.css';
 import AddDrinksButton from './AddDrinksButton';
 import Button from './Button';
 
-const Card = props => {
-    const drinkCount = props.drinkIds.length;
-    const currentDrinkIndex = props.drinkIds.indexOf(props.id);
-    const previousDisabled = currentDrinkIndex === 0 ? true : false;
-    const nextDisabled = currentDrinkIndex + 1 === drinkCount ? true : false;
+const CardRandomDrink = props => {
     const favoriteDrinkIds = props.favoriteDrinks.map(drink => drink.idDrink);
     const isFavorite = favoriteDrinkIds.includes(props.id);
     return (
@@ -15,16 +11,11 @@ const Card = props => {
             <div className="card" key={props.id}>
                 <h3>{props.drink.strDrink}</h3>
                 <img src={props.drink.strDrinkThumb} id={props.id} onClick={props.handleClick} height={"230px"} width={"220px"} alt={`A ${props.drink.strDrink} served in a ${props.drink.strGlass}`} />
-                {props.isDrillDown ? 
-                <div>
-                    <Button id={props.drinkIds[currentDrinkIndex - 1]} onClick={props.handleClick} disabled={previousDisabled}>Previous</Button>
-                    <Button id={props.drinkIds[currentDrinkIndex + 1]} onClick={props.handleClick} disabled={nextDisabled}>Next</Button>
-                </div> : null}
-                {props.randomDrink ? <Button onClick={props.handleRandomDrink}>Random</Button> : null}
+                <Button onClick={props.handleRandomDrink}>Random</Button>
                 {!isFavorite ? <AddDrinksButton addToFavoriteDrinks={() => props.addToFavoriteDrinks(props.drink)} /> : null}
             </div>
         </div>
     )
 }
 
-export default Card;
+export default CardRandomDrink;
