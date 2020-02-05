@@ -48,7 +48,7 @@ class App extends Component {
           drinks: result.drinks,      
           isLoaded: true,   
           isDrillDown: false,
-          drinkIds: result.drinks === null ? null : result.drinks.map(drink => drink["idDrink"]),
+          drinkIds: result.drinks === null ? null : result.drinks.map(drink => drink["idDrink"])
         })
       }
     ).catch(error => {
@@ -82,6 +82,7 @@ class App extends Component {
   }
 
   onHomeClick = () => {
+    this.setState({isRandom: false});
     this.fetch(Constants.search, "rum");
   }
 
