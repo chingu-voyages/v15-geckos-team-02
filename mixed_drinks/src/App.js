@@ -17,6 +17,7 @@ class App extends Component {
       drinkIds: [],
       isLoaded: false,
       isDrillDown: false,
+      randomDrink: null
     }
   }
 
@@ -92,10 +93,25 @@ class App extends Component {
         )}
         {/* Random Drink should return a card that is hooked to the objects in this.state */}
         {/* Need to find some way to return isDrillDown state from RandomDrink to App */}
-        <RandomDrink 
+        {/* <RandomDrink 
           handleClick={this.handleClick}
           isDrillDown={this.state.isDrillDown} 
-        />
+        /> */}
+        {
+          // fetch if needed 
+          this.state.randomDrink === null ? 
+          fetch(`${Constants.urlPath}${Constants.random}`)
+          .then(result => result.json())
+          .then(
+            (result) => {
+              this.setState({
+                randomDrink: result.drinks[0]
+              });
+            }
+          ).catch(error => {
+            console.error('Error:', error);
+          }) : null 
+        }
         {!this.state.isDrillDown ? null : 
         <DrinkDetails 
           key={this.state.drinks[0].idDrink} 

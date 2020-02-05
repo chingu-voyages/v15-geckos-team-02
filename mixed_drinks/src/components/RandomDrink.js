@@ -70,6 +70,6 @@ class RandomDrink extends Component{
   } 
 }
 
-export default RandomDrink
+export default RandomDrink;
 
 
