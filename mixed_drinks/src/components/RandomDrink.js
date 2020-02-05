@@ -1,17 +1,9 @@
-// import card. 
-// the card should contain a random drink with a buttom to fetch another random drink
-
-// 1. Fetch drink from API 
-// 2. Display returned drink as Card 
-// 3. Provide button to fetch
-
 import React, { Component } from 'react';
 import './RandomDrink.css';
 import { Constants } from './Constants.js'; 
 import RandomCard from './RandomCard.js';
 
 class RandomDrink extends Component{
-  // should inherit some common methods from App 
   constructor(props){
     super(props); 
     this.state = {
@@ -20,7 +12,6 @@ class RandomDrink extends Component{
     }
   }
 
-  // fetch should return a list of one drink
   randomFetch() {
     fetch(`${Constants.urlPath}${Constants.random}`)
     .then(result => result.json())

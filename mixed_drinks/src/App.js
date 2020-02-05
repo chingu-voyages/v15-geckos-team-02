@@ -68,7 +68,6 @@ class App extends Component {
 
   updateDrinks = (drink) => {
     // this is for RandomDrink to pass its drink to App 
-    console.log("The updated drink is: " + drink.strDrink); 
     this.setState({
       drinks: [drink],
     })
@@ -108,11 +107,11 @@ class App extends Component {
           />
         )}
         {!this.state.isRandom && this.state.isDrillDown ? null :
-          <RandomDrink 
+        <RandomDrink 
           handleClick={this.handleClick}
           isDrillDown={this.state.isDrillDown} 
           updateAppDrinks={this.updateDrinks}
-          />
+        />
         }
         {!this.state.isDrillDown ? null : 
         <DrinkDetails 
