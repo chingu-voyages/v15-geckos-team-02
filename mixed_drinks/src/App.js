@@ -86,6 +86,7 @@ class App extends Component {
   }
 
   handleClick = event => {
+    event.target.id === this.state.randomDrink.idDrink ? this.setState({isRandom: true}) : this.setState({isRandom: false});
     parseInt(event.target.id) >= 1 ? this.fetch(Constants.lookup, event.target.id, true) : this.fetch(Constants.searchFirstLetter, event.target.innerHTML);
   }
 
@@ -121,12 +122,14 @@ class App extends Component {
         <Card 
           key={drink.idDrink} 
           id={drink.idDrink}
-          drink={drink}
+          drink={this.state.isDrillDown && this.state.isRandom ? this.state.randomDrink : drink}
           isDrillDown={this.state.isDrillDown} 
           drinkIds={this.state.drinkIds}
           handleClick={this.handleClick} 
           addToFavoriteDrinks={this.addToFavoriteDrinks}
           favoriteDrinks={this.state.favoriteDrinks}
+          randomDrink={this.state.isRandom}
+          handleRandomDrink={this.handleRandomDrink}
         />
         )}
         {!this.state.isDrillDown ? null : 
