@@ -135,7 +135,7 @@ class App extends Component {
         {!this.state.isDrillDown ? null : 
         <DrinkDetails 
           key={this.state.drinks[0].idDrink} 
-          drink={this.state.drinks[0]}
+          drink={this.state.isDrillDown && this.state.isRandom ? this.state.randomDrink : this.state.drinks[0]}
         />
         }
         {!this.state.isLoaded ? null : 
