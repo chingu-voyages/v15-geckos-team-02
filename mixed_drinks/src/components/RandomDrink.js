@@ -30,6 +30,7 @@ class RandomDrink extends Component{
           isLoaded: true,
           drink: result.drinks[0]
         });
+        if (this.props.isDrillDown) this.props.updateAppDrinks(this.state.drink);
       }
     ).catch(error => {
       console.error('Error:', error);
@@ -41,19 +42,16 @@ class RandomDrink extends Component{
     this.randomFetch();
   }
 
-  fetchNewRandom(){
-    console.log("random fetch"); 
+  fetchNewRandom = () => {
+    this.randomFetch();
   }
 
   render(){ 
     return(
-      <div className="containerRandom"> 
-        <h1> RANDOM DRINK</h1>
+      <div className="containerRandom">
         {!this.state.isLoaded ? "Loading..." :
           this.state.drinks === null ? <p>No Drinks Found</p> :
-          // drink details taken care of by APP
-          !this.props.isDrillDown ? 
-            <RandomCard 
+          <RandomCard 
               key={this.state.drink.idDrink} 
               id={this.state.drink.idDrink} 
               strDrinkThumb={this.state.drink.strDrinkThumb} 
@@ -62,8 +60,7 @@ class RandomDrink extends Component{
               drinkGlass={this.state.drink.strGlass}
               isDrillDown={this.props.isDrillDown}
               fetchNewRandom={this.fetchNewRandom} 
-            />
-          : null
+          />
         }
       </div>
     )
