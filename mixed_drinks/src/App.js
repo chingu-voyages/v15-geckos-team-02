@@ -32,7 +32,7 @@ class App extends Component {
     this.setState({favoriteDrinks: favoriteDrinks})
   }
 
-  fetch(queryType, queryDrink, isDrillDown = false, inRandom = false) {
+  fetch(queryType, queryDrink, isDrillDown = false, isRandom = false) {
     fetch(`${Constants.urlPath}${queryType}${queryDrink}`)
     .then(result => result.json())
     .then(
@@ -41,7 +41,7 @@ class App extends Component {
           isLoaded: true,
           drinks: result.drinks,
           isDrillDown: true,
-          isRandom: inRandom,
+          isRandom: isRandom,
         }) :
         this.setState({
           drinks: result.drinks,      
@@ -119,13 +119,16 @@ class App extends Component {
           this.state.drinks.map(drink =>
           <Card 
             key={drink.idDrink} 
-            id={drink.idDrink} 
+            id={drink.idDrink}
+            drink={drink}
             strDrinkThumb={drink.strDrinkThumb} 
             drinkName={drink.strDrink} 
             handleClick={this.handleClick} 
             drinkGlass={drink.strGlass} 
             isDrillDown={this.state.isDrillDown} 
             drinkIds={this.state.drinkIds} 
+            addToFavoriteDrinks={this.addToFavoriteDrinks}
+            favoriteDrinks={this.state.favoriteDrinks}
           />
         )}
         {!this.state.isRandom && this.state.isDrillDown ? null :
@@ -133,6 +136,9 @@ class App extends Component {
           handleClick={this.handleClick}
           isDrillDown={this.state.isDrillDown} 
           updateAppDrinks={this.updateDrinks}
+          drinkIds={this.state.drinkIds} 
+          addToFavoriteDrinks={this.addToFavoriteDrinks}
+          favoriteDrinks={this.state.favoriteDrinks}
         />
         }
         {!this.state.isDrillDown ? null : 
@@ -147,6 +153,5 @@ class App extends Component {
     )
   }
 }
-
 
 export default App;

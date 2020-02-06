@@ -39,18 +39,22 @@ class RandomDrink extends Component{
 
   render(){ 
     return(
-      <div className="containerRandom">
+      <div>
         {!this.state.isLoaded ? "Loading..." :
           this.state.drinks === null ? <p>No Drinks Found</p> :
           <RandomCard 
               key={this.state.drink.idDrink} 
               id={this.state.drink.idDrink} 
+              drink={this.state.drink}
               strDrinkThumb={this.state.drink.strDrinkThumb} 
               drinkName={this.state.drink.strDrink} 
               handleClick={this.props.handleClick} 
               drinkGlass={this.state.drink.strGlass}
               isDrillDown={this.props.isDrillDown}
-              fetchNewRandom={this.fetchNewRandom} 
+              fetchNewRandom={this.fetchNewRandom}
+              drinkIds={this.props.drinkIds} 
+              addToFavoriteDrinks={this.props.addToFavoriteDrinks}
+              favoriteDrinks={this.props.favoriteDrinks} 
           />
         }
       </div>

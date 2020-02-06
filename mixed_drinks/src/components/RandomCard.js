@@ -1,30 +1,21 @@
 import React from 'react';
 import './Card.css';
 import AddDrinksButton from './AddDrinksButton';
+import Button from './Button';
 
 const RandomCard = props => {
-    const CardStyle = {
-        backgroundImage: `url(${props.strDrinkThumb})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-    }
+    const favoriteDrinkIds = props.favoriteDrinks.map(drink => drink.idDrink);
+    const isFavorite = favoriteDrinkIds.includes(props.id);
     return (
-      <div 
-        className="card tc grow dib w-27" 
-        title={`A ${props.drinkName} served in a ${props.drinkGlass}`} 
-        style={CardStyle} 
-        id={props.id} 
-        onClick={props.handleClick}
-        name="randomCard">             
-        
-        <h3 name="randomCard" id={props.id} className='bg-white-80 pa1'>{props.drinkName}</h3>
-        <div name="randomCard" id={props.id}> 
-          <button id={props.id} onClick={props.fetchNewRandom} name="randomButton"> New Drink </button>
-        </div> 
-        <AddDrinksButton />           
-        <h3 name="randomCard" className="innerTitle" > RANDOM DRINK </h3>
+
+      <div className="card-section">
+      <div className="card" key={props.id}>
+          <h3>{props.drinkName}</h3>
+          <img name="randomCard" onClick={props.handleClick} src={props.strDrinkThumb} id={props.id} height={"230px"} width={"220px"} alt={`A ${props.drinkName} served in a ${props.drink.strGlass}`} /> 
+          <Button id={props.id} onClick={props.fetchNewRandom} name="randomButton"> New Drink </Button>
+          {!isFavorite ? <AddDrinksButton addToFavoriteDrinks={() => props.addToFavoriteDrinks(props.drink)} /> : null}
       </div>
+  </div>
     )
 }
 
