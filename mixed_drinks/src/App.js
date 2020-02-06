@@ -5,6 +5,8 @@ import Card from './components/Card';
 import ErrorBoundary from './components/ErrorBoundary';
 import FirstLetterFilter from './components/FirstLetterFilter';
 import DrinkDetails from './components/DrinkDetails';
+import SelectedDrinks from './components/SelectedDrinks';
+import NavBar from './components/NavBar';
 import { Constants } from './components/Constants';
 import RandomDrink from './components/RandomDrink';
 
@@ -13,6 +15,7 @@ class App extends Component {
     super(props);
     this.state = {
       search: "",
+      favoriteDrinks: [],
       drinks: [],
       drinkIds: [],
       isLoaded: false,
@@ -23,6 +26,10 @@ class App extends Component {
 
   componentDidMount() {
     this.fetch(Constants.search, "rum");
+    const favoriteDrinkKeys = Object.keys(localStorage);
+    const favoriteDrinks = [];
+    favoriteDrinkKeys.forEach(drink => favoriteDrinks.push(JSON.parse(localStorage.getItem(drink))));
+    this.setState({favoriteDrinks: favoriteDrinks})
   }
 
   fetch(queryType, queryDrink, isDrillDown = false, inRandom = false) {
@@ -60,10 +67,9 @@ class App extends Component {
     }
   }
 
-  handleBannerClick = () => {
-    if(this.state.isDrillDown) {
-      this.fetch(Constants.search, this.state.search, false, false);
-    }
+
+  onHomeClick = () => {
+    this.fetch(Constants.search, "rum");
   }
 
   updateDrinks = (drink) => {
@@ -84,12 +90,28 @@ class App extends Component {
     parseInt(event.target.id) >= 1 ? this.fetch(Constants.lookup, event.target.id, true) : this.fetch(Constants.searchFirstLetter, event.target.innerHTML);
   }
 
+  addToFavoriteDrinks = drinkToAdd => {
+    let favoriteDrinksCopy = [...this.state.favoriteDrinks];
+    let favoriteDrinkIds = favoriteDrinksCopy.map(drink => drink.idDrink)
+    favoriteDrinksCopy.push(drinkToAdd);
+    if(!favoriteDrinkIds.includes(drinkToAdd.idDrink)) {
+      this.setState({favoriteDrinks: favoriteDrinksCopy});
+      localStorage.setItem(`${drinkToAdd.strDrink}`, JSON.stringify(drinkToAdd));
+    } 
+  }
+  
   render () {
     return (
-      <ErrorBoundary>
+    <ErrorBoundary>
       <div className="App tc">
-        <h1 onClick={this.handleBannerClick}>Mixed Drinks</h1>
+        <NavBar homeClick={this.onHomeClick}/>
         <Input handleInputChange={this.handleInputChange} handleEnterPressed={this.handleEnterPressed} />
+        <SelectedDrinks
+          handleClick={this.handleClick}
+          isDrillDown={this.state.isDrillDown} 
+          drinkIds={this.state.drinkIds} 
+          favoriteDrinks={this.state.favoriteDrinks}
+        />
         {/* If isRandom is true, no Cards are displayed, except the randomCard */}
         {!this.state.isLoaded ? "Loading..." :
           this.state.drinks === null ? <h1>No Drinks Found</h1> : 
@@ -120,10 +142,11 @@ class App extends Component {
         />
         }
         <FirstLetterFilter handleClick={this.handleClick} />
-        </div>
+      </div>
       </ErrorBoundary>
     )
   }
 }
+
 
 export default App;

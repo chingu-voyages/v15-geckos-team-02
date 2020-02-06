@@ -1,4 +1,11 @@
-.drinkBtn {
+.Fav_drinks {
+    width: 30%;
+    position: absolute;
+    margin-left: 800px;
+    top: 90px;
+}
+
+.selectDrinks {
     padding: 3px 10px;
     border-radius: 5px;
     border: none;
@@ -8,7 +15,7 @@
     font-weight: bold;
 }
 
-.drinkBtn:hover {
+.selectDrinks:hover {
     background-color: #c7c6c4;
-    color: #fff
+    color: #fff;
 }

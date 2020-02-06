@@ -1,27 +1,27 @@
 import React from 'react';
 import './Card.css';
 import AddDrinksButton from './AddDrinksButton';
+import Button from './Button';
 
 const Card = props => {
     const drinkCount = props.drinkIds.length;
     const currentDrinkIndex = props.drinkIds.indexOf(props.id);
     const previousDisabled = currentDrinkIndex === 0 ? true : false;
     const nextDisabled = currentDrinkIndex + 1 === drinkCount ? true : false;
-    const CardStyle = {
-        backgroundImage: `url(${props.strDrinkThumb})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-    }
+    const favoriteDrinkIds = props.favoriteDrinks.map(drink => drink.idDrink);
+    const isFavorite = favoriteDrinkIds.includes(props.id);
     return (
-        <div className="card tc grow dib w-27" title={`A ${props.drinkName} served in a ${props.drinkGlass}`} style={CardStyle} id={props.id} onClick={props.handleClick}>             
-            <h3 id={props.id} className='bg-white-80 pa1'>{props.drinkName}</h3>            
-            {props.isDrillDown ? 
-            <div>
-                <button id={props.drinkIds[currentDrinkIndex - 1]} onClick={props.handleClick} disabled={previousDisabled}>Previous</button>
-                <button id={props.drinkIds[currentDrinkIndex + 1]} onClick={props.handleClick} disabled={nextDisabled}>Next</button>
-            </div> : null}
-            <AddDrinksButton />           
+        <div className="card-section">
+            <div className="card" key={props.id}>
+                <h3>{props.drink.strDrink}</h3>
+                <img src={props.drink.strDrinkThumb} id={props.id} onClick={props.handleClick} height={"230px"} width={"220px"} alt={`A ${props.drink.strDrink} served in a ${props.drink.strGlass}`} />
+                {props.isDrillDown ? 
+                <div>
+                    <Button id={props.drinkIds[currentDrinkIndex - 1]} onClick={props.handleClick} disabled={previousDisabled}>Previous</Button>
+                    <Button id={props.drinkIds[currentDrinkIndex + 1]} onClick={props.handleClick} disabled={nextDisabled}>Next</Button> 
+                </div> : null}
+                {!isFavorite ? <AddDrinksButton addToFavoriteDrinks={() => props.addToFavoriteDrinks(props.drink)} /> : null}
+            </div>
         </div>
     )
 }
