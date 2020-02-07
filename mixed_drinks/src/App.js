@@ -25,6 +25,10 @@ class App extends Component {
 
   componentDidMount() {
     this.fetch(Constants.search, "rum");
+    const favoriteDrinkKeys = Object.keys(localStorage);
+    const favoriteDrinks = [];
+    favoriteDrinkKeys.forEach(drink => favoriteDrinks.push(JSON.parse(localStorage.getItem(drink))));
+    this.setState({favoriteDrinks: favoriteDrinks})
   }
   
 
@@ -77,6 +81,7 @@ class App extends Component {
     favoriteDrinksCopy.push(drinkToAdd);
     if(!favoriteDrinkIds.includes(drinkToAdd.idDrink)) {
       this.setState({favoriteDrinks: favoriteDrinksCopy});
+      localStorage.setItem(`${drinkToAdd.strDrink}`, JSON.stringify(drinkToAdd));
     } 
   }
   render () {
