@@ -23,7 +23,7 @@ const SelectedDrinks = props => {
                     )
                 })}
             </ul>
-            <Button className="selectDrinks" onClick={() => props.deleteFavoriteDrink(props.favoriteDrinks)}>Remove All</Button>
+            {props.favoriteDrinks.length === 0 ? null : <Button className="selectDrinks" onClick={() => props.deleteFavoriteDrink(props.favoriteDrinks)}>Remove All</Button>}
         </div>
     )
 }
