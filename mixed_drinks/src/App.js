@@ -102,9 +102,11 @@ class App extends Component {
   deleteFavoriteDrink = drinkToDelete => {
     const favoriteDrinksCopy = [...this.state.favoriteDrinks];
     const favoriteDrinkIds = favoriteDrinksCopy.map(drink => drink.idDrink)
-    favoriteDrinksCopy.splice(favoriteDrinkIds.indexOf(drinkToDelete.idDrink), 1);
+    drinkToDelete.forEach(drink => favoriteDrinksCopy.splice(drinkToDelete.length > 1 ? 0 : favoriteDrinkIds.indexOf(drink.idDrink), 1));
     this.setState({favoriteDrinks: favoriteDrinksCopy});
-    localStorage.removeItem(`${drinkToDelete.strDrink}`)
+    drinkToDelete.map(drink => {
+      localStorage.removeItem(`${drink.strDrink}`)
+    })
   }
   
   render () {
