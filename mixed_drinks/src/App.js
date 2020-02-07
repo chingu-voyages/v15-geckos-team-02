@@ -98,6 +98,16 @@ class App extends Component {
       localStorage.setItem(`${drinkToAdd.strDrink}`, JSON.stringify(drinkToAdd));
     } 
   }
+
+  deleteFavoriteDrink = drinkToDelete => {
+    const favoriteDrinksCopy = [...this.state.favoriteDrinks];
+    const favoriteDrinkIds = favoriteDrinksCopy.map(drink => drink.idDrink)
+    drinkToDelete.forEach(drink => favoriteDrinksCopy.splice(drinkToDelete.length > 1 ? 0 : favoriteDrinkIds.indexOf(drink.idDrink), 1));
+    this.setState({favoriteDrinks: favoriteDrinksCopy});
+    drinkToDelete.map(drink => {
+      localStorage.removeItem(`${drink.strDrink}`)
+    })
+  }
   
   render () {
     return (
@@ -110,6 +120,7 @@ class App extends Component {
           isDrillDown={this.state.isDrillDown} 
           drinkIds={this.state.drinkIds} 
           favoriteDrinks={this.state.favoriteDrinks}
+          deleteFavoriteDrink={this.deleteFavoriteDrink}
         />
         {/* If isRandom is true, no Cards are displayed, except the randomCard */}
         {!this.state.isLoaded ? "Loading..." :
