@@ -1,9 +1,12 @@
 .container {
     width: 600px;
     height: 50px;
+    margin: 20px;
 }
 
 .container__firstLetters {
-    margin-left: 33%;
+    position: relative;
+    top: 20px;
+    margin-bottom: 30px;
     font-size: 22px;
 }
