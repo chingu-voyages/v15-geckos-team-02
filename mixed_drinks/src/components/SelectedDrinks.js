@@ -17,6 +17,7 @@ const SelectedDrinks = props => {
                         isDrillDown={props.isDrillDown} 
                         drinkIds={props.drinkIds} 
                         drink={drink}
+                        deleteFavoriteDrink={props.deleteFavoriteDrink}
                     />
                     )
                 })}
