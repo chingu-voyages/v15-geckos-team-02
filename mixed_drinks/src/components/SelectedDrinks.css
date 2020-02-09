@@ -1,8 +1,13 @@
 .Fav_drinks {
-    width: 30%;
-    position: absolute;
-    margin-left: 800px;
-    top: 90px;
+    
+    top: 12rem;    
+    width: 10rem;
+    background-color: #d5d4d2;
+    position: fixed;
+    height: 100%;  
+    margin-left: 70%;    
+    display: flex;
+    display: block;
 }
 
 .selectDrinks {
@@ -18,4 +23,11 @@
 .selectDrinks:hover {
     background-color: #c7c6c4;
     color: #fff;
+}
+
+@media (--breakpoint-not-small) {  
+  .Fav_drinks {
+    margin-left: 70%;
+  }
+  
 }

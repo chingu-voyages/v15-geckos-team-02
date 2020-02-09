@@ -101,22 +101,19 @@ class App extends Component {
   
   render () {
     return (
-    <ErrorBoundary>
-      <div className="App tc">
-        <NavBar homeClick={this.onHomeClick}/>
-        <Input handleInputChange={this.handleInputChange} handleEnterPressed={this.handleEnterPressed} />
-        <SelectedDrinks
-          handleClick={this.handleClick}
-          isDrillDown={this.state.isDrillDown} 
-          drinkIds={this.state.drinkIds} 
-          favoriteDrinks={this.state.favoriteDrinks}
-        />
+    <ErrorBoundary>      
+      <div className="App tc">               
+        <NavBar homeClick={this.onHomeClick}/>        
+        <Input handleInputChange={this.handleInputChange} handleEnterPressed={this.handleEnterPressed}/>        
+        <FirstLetterFilter handleClick={this.handleClick} />                 
+        <div  className='mainContainer .absolute-ns'> 
+        
         {/* If isRandom is true, no Cards are displayed, except the randomCard */}
         {!this.state.isLoaded ? "Loading..." :
           this.state.drinks === null ? <h1>No Drinks Found</h1> : 
           this.state.isRandom ? null : 
           this.state.drinks.map(drink =>
-          <Card 
+          <Card
             key={drink.idDrink} 
             id={drink.idDrink}
             drink={drink}
@@ -140,13 +137,21 @@ class App extends Component {
           favoriteDrinks={this.state.favoriteDrinks}
         />
         }
+
         {!this.state.isDrillDown ? null : 
         <DrinkDetails 
           key={this.state.drinks[0].idDrink} 
           drink={this.state.drinks[0]}
         />
         }
-        <FirstLetterFilter handleClick={this.handleClick} />
+        
+        <SelectedDrinks
+          handleClick={this.handleClick}
+          isDrillDown={this.state.isDrillDown} 
+          drinkIds={this.state.drinkIds} 
+          favoriteDrinks={this.state.favoriteDrinks}
+        />                                
+      </div>
       </div>
       </ErrorBoundary>
     )

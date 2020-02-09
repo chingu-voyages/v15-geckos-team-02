@@ -5,8 +5,22 @@
   margin: 0 auto; 
 }
 
+.navigation {
+  top: 0;
+  flex: 1;
+  align-self: stretch;
+  right: 0;
+  left:0;
+  position: absolute;
+  position: fixed;
+  background-color: #d5d4d2;
+  overflow: hidden;
+  z-index: 1;
+
+}
+
 h1 {margin-top:50px;
-  display:flex;
+  display:flex;  
   
 }
 h1:before, h1:after {
@@ -15,6 +29,19 @@ h1:before, h1:after {
   flex:1;
   border-bottom:groove 2px;
   margin:auto 0.25em;  
+}
+
+.mainContainer {
+  position: absolute;
+  top: 200px; 
+  flex: 1; 
+  right: 0;
+  left: 18%;
+}
+
+@media (--breakpoint-not-small) {  
+  .absolute-ns  { position: absolute; }
+  
 }
 
 
