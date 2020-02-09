@@ -122,6 +122,7 @@ class App extends Component {
                 addToFavoriteDrinks={this.addToFavoriteDrinks} 
                 updateAppDrinks={this.updateAppDrinks}
                 handleEnterPressed={this.handleEnterPressed}
+                deleteFavoriteDrink={this.deleteFavoriteDrink}
               />}  
           />
             <Route path="/about" exact component={About} />

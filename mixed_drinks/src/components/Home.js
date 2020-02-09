@@ -4,11 +4,19 @@ import RandomDrink from './RandomDrink';
 import FirstLetterFilter from './FirstLetterFilter';
 import DrinkDetails from './DrinkDetails';
 import Input from './Input';
+import SelectedDrinks from './SelectedDrinks';
 
 const Home = props => {
     return (
         <div>
             <Input handleInputChange={props.handleInputChange} handleEnterPressed={props.handleEnterPressed} />
+            <SelectedDrinks
+                handleClick={props.handleClick}
+                isDrillDown={props.state.isDrillDown} 
+                drinkIds={props.state.drinkIds} 
+                favoriteDrinks={props.state.favoriteDrinks}
+                deleteFavoriteDrink={props.deleteFavoriteDrink}
+            />
             {props.state.drinks.isLoaded ? "Loading..." :
             props.state.drinks === null ? <h1>No Drinks Found</h1> : 
             props.state.isRandom ? null : 
