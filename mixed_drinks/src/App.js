@@ -129,6 +129,7 @@ class App extends Component {
                 handleClick={this.handleClick} 
                 addToFavoriteDrinks={this.addToFavoriteDrinks} 
                 updateAppDrinks={this.updateAppDrinks}
+                handleInputChange={this.handleInputChange}
                 handleEnterPressed={this.handleEnterPressed}
                 deleteFavoriteDrink={this.deleteFavoriteDrink}
               />}  

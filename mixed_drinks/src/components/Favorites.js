@@ -4,7 +4,7 @@ import DrinkDetails from './DrinkDetails';
 
 const Favorites = props => {
     return (
-        <div>
+        <div style={{marginTop: '184px'}}>
             {!props.state.isLoaded ? null : props.state.drinks.map(drink => 
              <Card 
                 key={drink.idDrink} 
