@@ -48,7 +48,7 @@ const Home = props => {
             {!props.state.isDrillDown ? null : 
             <DrinkDetails key={props.state.drinks[0].idDrink} drink={props.state.drinks[0]} />
             }
-            <FirstLetterFilter handleClick={props.handleClick} />
+            {!props.state.isDrillDown ? <FirstLetterFilter handleClick={props.handleClick} /> : null}
       </div>
     )
 }
