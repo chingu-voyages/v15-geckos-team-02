@@ -9,6 +9,9 @@ import SelectedDrinks from './components/SelectedDrinks';
 import NavBar from './components/NavBar';
 import { Constants } from './components/Constants';
 import RandomDrink from './components/RandomDrink';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import About from './components/About';
+import Home from './components/Home';
 
 class App extends Component {
   constructor(props) {
@@ -112,53 +115,25 @@ class App extends Component {
   render () {
     return (
     <ErrorBoundary>
+      <Router>
       <div className="App tc">
         <NavBar homeClick={this.onHomeClick}/>
-        <Input handleInputChange={this.handleInputChange} handleEnterPressed={this.handleEnterPressed} />
-        <SelectedDrinks
-          handleClick={this.handleClick}
-          isDrillDown={this.state.isDrillDown} 
-          drinkIds={this.state.drinkIds} 
-          favoriteDrinks={this.state.favoriteDrinks}
-          deleteFavoriteDrink={this.deleteFavoriteDrink}
-        />
-        {/* If isRandom is true, no Cards are displayed, except the randomCard */}
-        {!this.state.isLoaded ? "Loading..." :
-          this.state.drinks === null ? <h1>No Drinks Found</h1> : 
-          this.state.isRandom ? null : 
-          this.state.drinks.map(drink =>
-          <Card 
-            key={drink.idDrink} 
-            id={drink.idDrink}
-            drink={drink}
-            strDrinkThumb={drink.strDrinkThumb} 
-            drinkName={drink.strDrink} 
-            handleClick={this.handleClick} 
-            drinkGlass={drink.strGlass} 
-            isDrillDown={this.state.isDrillDown} 
-            drinkIds={this.state.drinkIds} 
-            addToFavoriteDrinks={this.addToFavoriteDrinks}
-            favoriteDrinks={this.state.favoriteDrinks}
+          <Switch>
+          <Route 
+          path="/home" exact 
+          component={() => 
+            <Home 
+              state={this.state} 
+              handleClick={this.handleClick} 
+              addToFavoriteDrinks={this.addToFavoriteDrinks} 
+              updateAppDrinks={this.updateAppDrinks}
+              handleEnterPressed={this.handleEnterPressed}
+            />}  
           />
-        )}
-        {!this.state.isRandom && this.state.isDrillDown ? null :
-        <RandomDrink 
-          handleClick={this.handleClick}
-          isDrillDown={this.state.isDrillDown} 
-          updateAppDrinks={this.updateDrinks}
-          drinkIds={this.state.drinkIds} 
-          addToFavoriteDrinks={this.addToFavoriteDrinks}
-          favoriteDrinks={this.state.favoriteDrinks}
-        />
-        }
-        {!this.state.isDrillDown ? null : 
-        <DrinkDetails 
-          key={this.state.drinks[0].idDrink} 
-          drink={this.state.drinks[0]}
-        />
-        }
-        <FirstLetterFilter handleClick={this.handleClick} />
+            <Route path="/about" exact component={About} />
+          </Switch>
       </div>
+      </Router>
       </ErrorBoundary>
     )
   }

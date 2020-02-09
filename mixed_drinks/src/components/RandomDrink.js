@@ -40,7 +40,7 @@ class RandomDrink extends Component{
   render(){ 
     return(
       <div>
-        {!this.state.isLoaded ? "Loading..." :
+        {!this.state.isLoaded ? null :
           this.state.drinks === null ? <p>No Drinks Found</p> :
           <RandomCard 
               key={this.state.drink.idDrink} 
