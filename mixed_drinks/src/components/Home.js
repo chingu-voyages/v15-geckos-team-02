@@ -11,7 +11,7 @@ const Home = props => {
             <Input handleInputChange={props.handleInputChange} handleEnterPressed={props.handleEnterPressed} />
             {props.state.drinks.isLoaded ? "Loading..." :
             props.state.drinks === null ? <h1>No Drinks Found</h1> : 
-            props.state.drinks.isRandom ? null : 
+            props.state.isRandom ? null : 
             props.state.drinks.map(drink =>
             <Card 
                 key={drink.idDrink} 
@@ -31,10 +31,11 @@ const Home = props => {
             <RandomDrink 
                 handleClick={props.handleClick}
                 isDrillDown={props.state.isDrillDown} 
-                updateAppDrinks={props.updateDrinks}
+                updateAppDrinks={props.updateAppDrinks}
                 drinkIds={props.state.drinkIds} 
                 addToFavoriteDrinks={props.addToFavoriteDrinks}
                 favoriteDrinks={props.state.favoriteDrinks}
+                state={props.state}
             />}
             {!props.state.isDrillDown ? null : 
             <DrinkDetails key={props.state.drinks[0].idDrink} drink={props.state.drinks[0]} />

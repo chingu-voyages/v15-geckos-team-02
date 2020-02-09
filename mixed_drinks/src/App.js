@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import Input from './components/Input';
-import Card from './components/Card';
 import ErrorBoundary from './components/ErrorBoundary';
-import FirstLetterFilter from './components/FirstLetterFilter';
-import DrinkDetails from './components/DrinkDetails';
-import SelectedDrinks from './components/SelectedDrinks';
 import NavBar from './components/NavBar';
 import { Constants } from './components/Constants';
-import RandomDrink from './components/RandomDrink';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import About from './components/About';
 import Home from './components/Home';
@@ -74,7 +68,7 @@ class App extends Component {
     this.fetch(Constants.search, "rum");
   }
 
-  updateDrinks = (drink) => {
+  updateAppDrinks = (drink) => {
     // this is for RandomDrink to pass its drink to App 
     this.setState({
       drinks: [drink],
@@ -107,11 +101,11 @@ class App extends Component {
     const favoriteDrinkIds = favoriteDrinksCopy.map(drink => drink.idDrink)
     drinkToDelete.forEach(drink => favoriteDrinksCopy.splice(drinkToDelete.length > 1 ? 0 : favoriteDrinkIds.indexOf(drink.idDrink), 1));
     this.setState({favoriteDrinks: favoriteDrinksCopy});
-    drinkToDelete.map(drink => {
+    drinkToDelete.forEach(drink => {
       localStorage.removeItem(`${drink.strDrink}`)
     })
   }
-  
+
   render () {
     return (
     <ErrorBoundary>
@@ -120,15 +114,15 @@ class App extends Component {
         <NavBar homeClick={this.onHomeClick}/>
           <Switch>
           <Route 
-          path="/home" exact 
-          component={() => 
-            <Home 
-              state={this.state} 
-              handleClick={this.handleClick} 
-              addToFavoriteDrinks={this.addToFavoriteDrinks} 
-              updateAppDrinks={this.updateAppDrinks}
-              handleEnterPressed={this.handleEnterPressed}
-            />}  
+            path="/home" exact 
+            render={(_props) => 
+              <Home 
+                state={this.state} 
+                handleClick={this.handleClick} 
+                addToFavoriteDrinks={this.addToFavoriteDrinks} 
+                updateAppDrinks={this.updateAppDrinks}
+                handleEnterPressed={this.handleEnterPressed}
+              />}  
           />
             <Route path="/about" exact component={About} />
           </Switch>
