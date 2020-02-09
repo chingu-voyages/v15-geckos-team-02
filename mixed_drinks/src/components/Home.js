@@ -17,7 +17,7 @@ const Home = props => {
                 favoriteDrinks={props.state.favoriteDrinks}
                 deleteFavoriteDrink={props.deleteFavoriteDrink}
             />
-            {props.state.drinks.isLoaded ? "Loading..." :
+            {!props.state.isLoaded ? "Loading..." :
             props.state.drinks === null ? <h1>No Drinks Found</h1> : 
             props.state.isRandom ? null : 
             props.state.drinks.map(drink =>
@@ -33,6 +33,7 @@ const Home = props => {
                 drinkIds={props.state.drinkIds} 
                 addToFavoriteDrinks={props.addToFavoriteDrinks}
                 favoriteDrinks={props.state.favoriteDrinks}
+                deleteFavoriteDrink={props.deleteFavoriteDrink}
             />
             )}
             {!props.state.isRandom && props.state.isDrillDown ? null :
