@@ -2,6 +2,7 @@ import React from 'react';
 import './SelectedDrinks.css';
 import './CardFavoriteDrink';
 import CardFavoriteDrink from './CardFavoriteDrink';
+import Button from './Button';
 
 const SelectedDrinks = props => {
     return(
@@ -17,11 +18,12 @@ const SelectedDrinks = props => {
                         isDrillDown={props.isDrillDown} 
                         drinkIds={props.drinkIds} 
                         drink={drink}
+                        deleteFavoriteDrink={props.deleteFavoriteDrink}
                     />
                     )
                 })}
             </ul>
-            <button type="submit" className="selectDrinks">Go to drinks</button>
+            {props.favoriteDrinks.length === 0 ? null : <Button className="selectDrinks" onClick={() => props.deleteFavoriteDrink(props.favoriteDrinks)}>Remove All</Button>}
         </div>
     )
 }

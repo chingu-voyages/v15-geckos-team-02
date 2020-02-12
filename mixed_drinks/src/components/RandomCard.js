@@ -19,5 +19,4 @@ const RandomCard = props => {
     )
 }
 
-
 export default RandomCard;
