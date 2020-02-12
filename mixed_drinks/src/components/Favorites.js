@@ -3,6 +3,7 @@ import Card from './Card';
 import DrinkDetails from './DrinkDetails';
 
 const Favorites = props => {
+    const favoriteDrinkIds = props.favoriteDrinks.map(drink => drink.idDrink);
     return (
         <div style={{marginTop: '184px'}}>
             {!props.state.isLoaded ? null : props.state.drinks.map(drink => 
@@ -15,10 +16,11 @@ const Favorites = props => {
                 handleClick={props.handleClick} 
                 drinkGlass={drink.strGlass} 
                 isDrillDown={props.state.isDrillDown} 
-                drinkIds={props.state.drinkIds}
+                drinkIds={favoriteDrinkIds}
                 favoriteDrinks={props.state.favoriteDrinks}
                 addToFavoriteDrinks={props.addToFavoriteDrinks}
                 deleteFavoriteDrink={props.deleteFavoriteDrink}
+                isFavoritesPage={true}
             />
             )}
             {!props.state.isDrillDown ? null : 

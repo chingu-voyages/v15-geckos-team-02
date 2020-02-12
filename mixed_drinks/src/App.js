@@ -82,7 +82,6 @@ class App extends Component {
     })
   }
 
-
   handleClick = event => {
     if(event.target.name === "randomButton"){
       return; 
@@ -104,14 +103,18 @@ class App extends Component {
     } 
   }
 
-  deleteFavoriteDrink = drinkToDelete => {
+  deleteFavoriteDrink = (drinkToDelete, isFavoritesPage) => {
     const favoriteDrinksCopy = [...this.state.favoriteDrinks];
     const favoriteDrinkIds = favoriteDrinksCopy.map(drink => drink.idDrink)
     drinkToDelete.forEach(drink => favoriteDrinksCopy.splice(drinkToDelete.length > 1 ? 0 : favoriteDrinkIds.indexOf(drink.idDrink), 1));
-    this.setState({favoriteDrinks: favoriteDrinksCopy});
+    this.setState({ favoriteDrinks: favoriteDrinksCopy });
     drinkToDelete.forEach(drink => {
       localStorage.removeItem(`${drink.strDrink}`)
     })
+  
+    if(isFavoritesPage){
+      this.setState({favoriteDrinks: favoriteDrinksCopy, drinks: favoriteDrinksCopy, isDrillDown: false})
+    }
   }
 
   render () {
@@ -144,6 +147,7 @@ class App extends Component {
                 updateAppDrinks={this.updateAppDrinks}
                 handleEnterPressed={this.handleEnterPressed}
                 deleteFavoriteDrink={this.deleteFavoriteDrink}
+                favoriteDrinksNextIndex={this.favoriteDrinksNextIndex}
               />}
             />
             <Route path="/about" exact component={About} />
