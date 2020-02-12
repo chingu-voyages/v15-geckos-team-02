@@ -10,9 +10,11 @@ const RandomCard = props => {
 
       <div className="card-section">
       <div className="card" key={props.id}>
-          <h3>{props.drinkName}</h3>
+          <h3>
+              {props.drinkName}
+              <span className="randomButton"> <Button id={props.id} onClick={props.fetchNewRandom} name="randomButton"> New Drink </Button> </span>
+          </h3>
           <img name="randomCard" onClick={props.handleClick} src={props.strDrinkThumb} id={props.id} height={"230px"} width={"220px"} alt={`A ${props.drinkName} served in a ${props.drink.strGlass}`} /> 
-          <Button id={props.id} onClick={props.fetchNewRandom} name="randomButton"> New Drink </Button>
           {!isFavorite ? <AddDrinksButton addToFavoriteDrinks={() => props.addToFavoriteDrinks(props.drink)} /> : null}
       </div>
   </div>
