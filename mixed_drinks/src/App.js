@@ -6,6 +6,7 @@ import { Constants } from './components/Constants';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import About from './components/About';
 import Home from './components/Home';
+import Favorites from './components/Favorites';
 
 class App extends Component {
   constructor(props) {
@@ -68,10 +69,16 @@ class App extends Component {
     this.fetch(Constants.search, "rum");
   }
 
-  updateAppDrinks = (drink) => {
-    // this is for RandomDrink to pass its drink to App 
+  updateAppDrinks = (drink, favorite = false) => {
+    // update for AppDrink for Favorites and RandomDrink
+    let drinkIds = this.state.favoriteDrinks.map(drink => drink.idDrink);
+    favorite ? this.setState({
+      drinks: this.state.favoriteDrinks,
+      drinkIds: drinkIds,
+      isDrillDown: false
+    }) : 
     this.setState({
-      drinks: [drink],
+      drinks: [drink]
     })
   }
 
@@ -96,14 +103,18 @@ class App extends Component {
     } 
   }
 
-  deleteFavoriteDrink = drinkToDelete => {
+  deleteFavoriteDrink = (drinkToDelete, isFavoritesPage) => {
     const favoriteDrinksCopy = [...this.state.favoriteDrinks];
     const favoriteDrinkIds = favoriteDrinksCopy.map(drink => drink.idDrink)
     drinkToDelete.forEach(drink => favoriteDrinksCopy.splice(drinkToDelete.length > 1 ? 0 : favoriteDrinkIds.indexOf(drink.idDrink), 1));
-    this.setState({favoriteDrinks: favoriteDrinksCopy});
+    this.setState({ favoriteDrinks: favoriteDrinksCopy });
     drinkToDelete.forEach(drink => {
       localStorage.removeItem(`${drink.strDrink}`)
     })
+  
+    if(isFavoritesPage){
+      this.setState({favoriteDrinks: favoriteDrinksCopy, drinks: favoriteDrinksCopy, isDrillDown: false})
+    }
   }
 
   render () {
@@ -111,7 +122,7 @@ class App extends Component {
     <ErrorBoundary>
       <Router>
       <div className="App tc">
-        <NavBar homeClick={this.onHomeClick}/>
+        <NavBar homeClick={this.onHomeClick} updateAppDrinks={this.updateAppDrinks} favoriteDrinks={this.state.favoriteDrinks}/>
           <Switch>
           <Route 
             path="/home" exact 
@@ -121,10 +132,24 @@ class App extends Component {
                 handleClick={this.handleClick} 
                 addToFavoriteDrinks={this.addToFavoriteDrinks} 
                 updateAppDrinks={this.updateAppDrinks}
+                handleInputChange={this.handleInputChange}
                 handleEnterPressed={this.handleEnterPressed}
                 deleteFavoriteDrink={this.deleteFavoriteDrink}
               />}  
           />
+            <Route path="/favorites" 
+            exact render={(_props) => 
+              <Favorites 
+                state={this.state}
+                favoriteDrinks={this.state.favoriteDrinks} 
+                handleClick={this.handleClick} 
+                addToFavoriteDrinks={this.addToFavoriteDrinks} 
+                updateAppDrinks={this.updateAppDrinks}
+                handleEnterPressed={this.handleEnterPressed}
+                deleteFavoriteDrink={this.deleteFavoriteDrink}
+                favoriteDrinksNextIndex={this.favoriteDrinksNextIndex}
+              />}
+            />
             <Route path="/about" exact component={About} />
           </Switch>
       </div>
