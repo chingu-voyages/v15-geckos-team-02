@@ -5,9 +5,9 @@ import DrinkDetails from './DrinkDetails';
 const Favorites = props => {
     const favoriteDrinkIds = props.favoriteDrinks.map(drink => drink.idDrink);
     return (
-        <div style={{marginTop: '184px'}}>
+        <div className="mainContainer absolute-ns">
             {!props.state.isLoaded ? null : props.state.drinks.map(drink => 
-             <Card 
+            <Card 
                 key={drink.idDrink} 
                 id={drink.idDrink}
                 drink={drink}
@@ -29,6 +29,5 @@ const Favorites = props => {
         </div>
         )
     }
-
 
 export default Favorites

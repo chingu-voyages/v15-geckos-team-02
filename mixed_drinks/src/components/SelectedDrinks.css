@@ -1,8 +1,20 @@
 .Fav_drinks {
-    width: 30%;
+    top: 12rem;    
+    width: 10rem;
+    background-color: #d5d4d2;
+    height: 100%;  
+    margin-left: 70%; 
+    position:fixed;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
+
+.sideContainer {
     position: absolute;
-    margin-left: 800px;
-    top: 90px;
+    top: 10px; 
+    flex: 1; 
+    margin-left: 600px;
+    left: 18%;
 }
 
 .selectDrinks {
