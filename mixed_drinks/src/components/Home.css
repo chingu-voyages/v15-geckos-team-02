@@ -16,7 +16,7 @@
     top: 200px; 
     flex: 1; 
     right: 0;
-    left: 18%;
+    left: 10%;
   }
 
   @media (--breakpoint-not-small) {  
