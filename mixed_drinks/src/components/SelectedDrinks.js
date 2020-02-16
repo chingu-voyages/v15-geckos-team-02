@@ -1,12 +1,11 @@
 import React from 'react';
 import './SelectedDrinks.css';
-import './CardFavoriteDrink';
 import CardFavoriteDrink from './CardFavoriteDrink';
 import Button from './Button';
 
 const SelectedDrinks = props => {
     return(
-        <div className="Fav_drinks">
+        <div className="sideContainer">
             <h3>Favorite Drinks</h3>
             <ul className="list pl0 measure center">
                 {props.favoriteDrinks.map(drink => {

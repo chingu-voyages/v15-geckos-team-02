@@ -1,9 +1,31 @@
-.container {
-    width: 600px;
-    height: 50px;
+.container {    
+    position: absolute;
+    top: 0; 
+    flex: 1; 
+    align-self: stretch;
+    right: 0;
+    left: 0;
+    position: fixed;
+    background-color: #ffffff;
+    overflow: hidden;
+    z-index: 1;
 }
+
+.navigation {
+    top: 0;
+    flex: 1;
+    align-self: stretch;
+    right: 0;
+    left:0;
+    position: absolute;
+    position: fixed;
+    background-color: #d5d4d2;
+    overflow: hidden;
+    z-index: 1;
+  }
 
 .container__firstLetters {
     margin-left: 33%;
     font-size: 22px;
 }
+  

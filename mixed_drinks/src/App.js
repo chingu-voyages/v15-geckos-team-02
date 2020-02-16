@@ -122,7 +122,11 @@ class App extends Component {
     <ErrorBoundary>
       <Router>
       <div className="App tc">
-        <NavBar homeClick={this.onHomeClick} updateAppDrinks={this.updateAppDrinks} favoriteDrinks={this.state.favoriteDrinks}/>
+        <NavBar 
+          homeClick={this.onHomeClick} 
+          updateAppDrinks={this.updateAppDrinks} 
+          favoriteDrinks={this.state.favoriteDrinks}
+        />
           <Switch>
           <Route 
             path="/home" exact 
@@ -136,7 +140,7 @@ class App extends Component {
                 handleEnterPressed={this.handleEnterPressed}
                 deleteFavoriteDrink={this.deleteFavoriteDrink}
               />}  
-          />
+            />
             <Route path="/favorites" 
             exact render={(_props) => 
               <Favorites 

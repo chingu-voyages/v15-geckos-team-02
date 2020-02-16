@@ -1,4 +1,5 @@
 import React from 'react';
+import './Card.css';
 
 const getDrinkValues = (drink, propertyNameStartsWith) => {
     return Object.getOwnPropertyNames(drink).filter(drink => drink.startsWith(`${propertyNameStartsWith}`)).map(propertyName => drink[propertyName]);
@@ -9,7 +10,7 @@ const DrinkDetails = props => {
     const measurements = getDrinkValues(props.drink, "strMeasure");
     return (
         <div>
-            <p>{props.drink.strInstructions}</p>
+            <p className='pa2 pr7-ns'>{props.drink.strInstructions}</p>
             <ul className="card__list">
                 {ingredients.map((ingredient, index) => {
                     return measurements[index] === null ? 

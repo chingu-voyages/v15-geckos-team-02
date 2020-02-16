@@ -1,0 +1,26 @@
+.navigation {
+    top: 0;
+    flex: 1;
+    align-self: stretch;
+    right: 0;
+    left:0;
+    position: absolute;
+    position: fixed;
+    background-color: #d5d4d2;
+    overflow: hidden;
+    z-index: 1;
+  
+  }
+  
+  .mainContainer {
+    position: absolute;
+    top: 200px; 
+    flex: 1; 
+    right: 0;
+    left: 18%;
+  }
+
+  @media (--breakpoint-not-small) {  
+    .absolute-ns  { position: absolute; }
+  
+  }
