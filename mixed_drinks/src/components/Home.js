@@ -43,13 +43,6 @@ const Home = props => {
                 />}
                 {!props.state.isDrillDown ? null : 
                 <DrinkDetails key={props.state.drinks[0].idDrink} drink={props.state.drinks[0]} />}
-                <SelectedDrinks
-                    handleClick={props.handleClick}
-                    isDrillDown={props.state.isDrillDown} 
-                    drinkIds={props.state.drinkIds} 
-                    favoriteDrinks={props.state.favoriteDrinks}
-                    deleteFavoriteDrink={props.deleteFavoriteDrink}
-                />
             </div>
       </div>
     )
