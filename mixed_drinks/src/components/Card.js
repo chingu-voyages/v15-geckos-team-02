@@ -13,8 +13,8 @@ const Card = props => {
     return (
         <div className="card-section">
             <div className="card" key={props.id}>
-                <h3>{props.drink.strDrink}</h3>
-                <img src={props.drink.strDrinkThumb} id={props.id} onClick={props.handleClick} height={"230px"} width={"220px"} alt={`A ${props.drink.strDrink} served in a ${props.drink.strGlass}`} />
+                <h3>{props.drinkName}</h3>
+                <img src={props.strDrinkThumb} id={props.id} onClick={props.handleClick} height={"230px"} width={"220px"} alt={`A ${props.drinkName} served in a ${props.drink.strGlass}`} />
                 {props.isDrillDown ? 
                 <div>
                     <Button id={props.drinkIds[currentDrinkIndex - 1]} onClick={props.handleClick} disabled={previousDisabled}>Previous</Button>

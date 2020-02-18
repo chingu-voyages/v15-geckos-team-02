@@ -1,0 +1,22 @@
+.randomButton{
+    vertical-align: middle;
+    margin: 0 auto; 
+    font-size: 0.6em;
+}
+
+.randomText{
+    position: absolute;
+    width:100%;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color:white;
+  padding: 5px;
+  background-color: rgba(0,0,0, 0.6);
+  
+}
+
+.imageContainer{
+    position: relative;
+    text-align: center;
+}
